@@ -91,7 +91,7 @@ Example:
     "value": "2026-03-19T12:00:00Z"
   },
   "@context": [
-    "https://raw.githubusercontent.com/H2020-MEDIATE/Mediate_Data_Model/refs/heads/main/context.jsonld",
+    "https://raw.githubusercontent.com/H2020-MEDIATE/Mediate_Data_Model_Public/main/context.jsonld",
     "https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context.jsonld"
   ]
 }
