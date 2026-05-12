@@ -11,25 +11,26 @@ components:
         to the requested Asset entity.
       type: object
 
-      id:
-        anyOf:
-          - description: Property. Identifier format of any NGSI entity.
-            maxLength: 256
-            minLength: 1
-            pattern: '^[\w\-\.\{\}\$\+\*\[\]`|~^@!,:\\]+$'
-            type: string
-        format: uri
-        type: string
-        description: Unique identifier of this Asset response event.
-        x-ngsi:
-          type: Property
-
       required:
         - id
         - type
         - timestamp
 
       properties:
+        id:
+          anyOf:
+            - description: Property. Identifier format of any NGSI entity.
+              maxLength: 256
+              minLength: 1
+              pattern: '^[\w\-\.\{\}\$\+\*\[\]`|~^@!,:\\]+$'
+              type: string
+          format: uri
+          type: string
+          description: Unique identifier of this Asset response event.
+          x-ngsi:
+            type: Property
+
+
         type:
           type: string
           enum:

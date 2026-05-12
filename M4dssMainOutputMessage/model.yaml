@@ -12,25 +12,26 @@ components:
         then to the Policy Manager.
       type: object
 
-      id:
-        anyOf:
-          - description: Property. Identifier format of any NGSI entity.
-            maxLength: 256
-            minLength: 1
-            pattern: ^[\w\-\.\{\}\$\+\*\[\]`|~^@!,:\\]+$
-            type: string
-        format: uri
-        type: string
-        description: Unique identifier of this DSS main output message.
-        x-ngsi:
-          type: Property
-
       required:
         - id
         - type
         - timestamp
 
       properties:
+        id:
+          anyOf:
+            - description: Property. Identifier format of any NGSI entity.
+              maxLength: 256
+              minLength: 1
+              pattern: ^[\w\-\.\{\}\$\+\*\[\]`|~^@!,:\\]+$
+              type: string
+          format: uri
+          type: string
+          description: Unique identifier of this DSS main output message.
+          x-ngsi:
+            type: Property
+
+
         type:
           type: string
           enum:
