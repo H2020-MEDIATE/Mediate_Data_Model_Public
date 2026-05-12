@@ -1,0 +1,90 @@
+---
+components:
+  schemas:
+    GetOverwatchesFullCommand:
+      x-ngsi:
+        uri-prefix: "https://raw.githubusercontent.com/H2020-MEDIATE/Mediate_Data_Model_Public/main/OM1getOverwatchesFullCommand/schema.json"
+
+      description: >-
+        Schema for Service Manager registry retrieval command OM1. This command
+        is sent by the Orchestrator to the Service Manager to request the full
+        list of registered Overwatches, including their associated Sentinels.
+      type: object
+
+      id:
+        anyOf:
+          - description: Property. Identifier format of any NGSI entity.
+            maxLength: 256
+            minLength: 1
+            pattern: '^[\w\-\.\{\}\$\+\*\[\]`|~^@!,:\\]+$'
+            type: string
+        format: uri
+        type: string
+        description: Unique identifier of this Get Overwatches Full command.
+        x-ngsi:
+          type: Property
+
+      required:
+        - id
+        - type
+        - timestamp
+
+      properties:
+        type:
+          type: string
+          enum:
+            - getOverwatchesFullCommand
+          description: >-
+            NGSI-LD entity type. It has to be getOverwatchesFullCommand.
+          x-ngsi:
+            type: Property
+
+        originator:
+          type: string
+          enum:
+            - ORCHESTRATOR
+          description: Component that generated the command.
+          x-ngsi:
+            type: Property
+
+        messageId:
+          type: string
+          description: Unique identifier of this command message.
+          x-ngsi:
+            type: Property
+
+        correlationId:
+          type: string
+          description: >-
+            Identifier used to correlate this command with the corresponding
+            response event.
+          x-ngsi:
+            type: Property
+
+        timestamp:
+          type: string
+          format: date-time
+          description: Date and time at which the command was generated.
+          x-ngsi:
+            type: Property
+
+info:
+  title: MEDIATE OM1 Get Overwatches Full Command
+  version: "0.1.0"
+  description: >-
+    Data model for registry retrieval command OM1, used by the Orchestrator to
+    request all registered Overwatches and their associated Sentinels from the
+    Service Manager.
+
+openapi: "3.0.3"
+
+paths:
+  /ngsi-ld/v1/entities:
+    get:
+      responses:
+        "200":
+          description: OK
+          content:
+            application/ld+json:
+              schema:
+                type: object

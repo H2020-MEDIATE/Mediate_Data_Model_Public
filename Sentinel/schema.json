@@ -1,0 +1,66 @@
+{
+  "$schema": "http://json-schema.org/schema#",
+  "title": "Sentinel",
+  "description": "Schema for the MEDIATE Sentinel entity. A Sentinel represents a monitored or managed component registered in the Service Manager registry. It includes operational status, threat status, heartbeat information, its related Overwatch, managed Assets, reconfiguration status, configuration version, and registration timestamp.",
+  "type": "object",
+  "id": {
+    "$ref": "https://smart-data-models.github.io/data-models/common-schema.json#/definitions/EntityIdentifierType"
+  },
+  "required": [
+    "id",
+    "type"
+  ],
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": [
+        "sentinel"
+      ],
+      "description": "NGSI-LD entity type. It has to be sentinel."
+    },
+    "operationalStatus": {
+      "type": "string",
+      "enum": [
+        "OPERATIONAL",
+        "RECONFIGURING",
+        "INITIALIZING",
+        "STOPPED",
+        "FAILED"
+      ],
+      "description": "Property. Current operational status of the Sentinel."
+    },
+    "threatStatus": {
+      "type": "string",
+      "description": "Property. Current threat status of the Sentinel. Example: UNDER_THREAT."
+    },
+    "lastHeartbeat": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Property. Date and time of the latest heartbeat received from the Sentinel."
+    },
+    "overwatch": {
+      "$ref": "https://smart-data-models.github.io/data-models/common-schema.json#/definitions/EntityIdentifierType",
+      "description": "Relationship. Overwatch entity associated with the Sentinel."
+    },
+    "managedAssets": {
+      "type": "array",
+      "description": "Relationship. List of Asset entities managed or monitored by the Sentinel.",
+      "items": {
+        "$ref": "https://smart-data-models.github.io/data-models/common-schema.json#/definitions/EntityIdentifierType"
+      }
+    },
+    "lastReconfigurationStatus": {
+      "type": "string",
+      "description": "Property. Last known reconfiguration execution status of the Sentinel. Example: SUCCESS."
+    },
+    "configurationVersion": {
+      "type": "string",
+      "description": "Property. Current configuration name or version associated with the Sentinel."
+    },
+    "registrationTimestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Property. Date and time at which the Sentinel was registered in the Service Manager registry."
+    }
+  }
+}

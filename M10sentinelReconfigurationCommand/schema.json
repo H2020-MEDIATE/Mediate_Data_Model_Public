@@ -1,0 +1,181 @@
+{
+  "$schema": "http://json-schema.org/schema#",
+  "title": "SentinelReconfigurationCommand",
+  "description": "Schema for MEDIATE Message M10. This message initiates a reconfiguration command from the Sentinel Reconfiguration Deployment Unit to the target Sentinel. It contains deployment information, ordered actions, security metadata, and execution status.",
+  "type": "object",
+  "id": {
+    "$ref": "https://smart-data-models.github.io/data-models/common-schema.json#/definitions/EntityIdentifierType"
+  },
+  "required": [
+    "id",
+    "type",
+    "timestamp"
+  ],
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": [
+        "sentinelReconfigurationCommand"
+      ],
+      "description": "NGSI-LD entity type. It has to be sentinelReconfigurationCommand."
+    },
+    "deploymentUnitId": {
+      "type": "string",
+      "description": "Property. Identifier of the Sentinel Reconfiguration Deployment Unit sending the command."
+    },
+    "targetSentinel": {
+      "type": "object",
+      "description": "Relationship. Target Sentinel entity that must execute the reconfiguration command, with contextual metadata attached to the relationship.",
+      "properties": {
+        "object": {
+          "$ref": "https://smart-data-models.github.io/data-models/common-schema.json#/definitions/EntityIdentifierType",
+          "description": "Relationship target. Identifier of the target Sentinel entity."
+        },
+        "sentinelType": {
+          "type": "string",
+          "enum": [
+            "sentinel-hardware",
+            "sentinel-edge",
+            "sentinel-cloud"
+          ],
+          "description": "Property. Type/category of the target Sentinel."
+        },
+        "ipAddress": {
+          "type": "string",
+          "description": "Property. IP address of the target Sentinel."
+        }
+      }
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Property. Date and time at which the Sentinel reconfiguration command was generated."
+    },
+    "deployment": {
+      "type": "object",
+      "description": "Property. Deployment information associated with the reconfiguration command.",
+      "properties": {
+        "configurationId": {
+          "type": "array",
+          "description": "List of configuration identifiers to be applied.",
+          "items": {
+            "type": "string"
+          }
+        },
+        "version": {
+          "type": "string",
+          "description": "Version of the deployment configuration."
+        },
+        "priority": {
+          "type": "string",
+          "enum": [
+            "high",
+            "regular",
+            "low"
+          ],
+          "description": "Priority of the reconfiguration command."
+        }
+      }
+    },
+    "actions": {
+      "type": "array",
+      "description": "Property. Ordered list of actions to be executed by the target Sentinel.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "step": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "Execution step number."
+          },
+          "actionType": {
+            "type": "string",
+            "enum": [
+              "pre_check",
+              "sw_configuration",
+              "fw_configuration",
+              "hw_configuration",
+              "restart_services"
+            ],
+            "description": "Type of action to be executed."
+          },
+          "description": {
+            "type": "string",
+            "description": "Human-readable description of the action."
+          },
+          "expectedResult": {
+            "type": "string",
+            "description": "Expected result of the action."
+          },
+          "components": {
+            "type": "array",
+            "description": "Software components affected by the action.",
+            "items": {
+              "type": "string"
+            }
+          },
+          "version": {
+            "type": "array",
+            "description": "Version identifiers associated with firmware or hardware configuration actions.",
+            "items": {
+              "type": "string"
+            }
+          },
+          "services": {
+            "type": "array",
+            "description": "Services affected by the action.",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "security": {
+      "type": "object",
+      "description": "Property. Security metadata associated with the command, kept as provided by the partner payload.",
+      "properties": {
+        "authentication": {
+          "type": "object",
+          "description": "Authentication information.",
+          "properties": {
+            "method": {
+              "type": "string",
+              "description": "Authentication method."
+            },
+            "token": {
+              "type": "string",
+              "description": "Authentication token as provided in the partner payload. Its exact usage should be clarified with the responsible partners before implementation."
+            }
+          }
+        },
+        "encryption": {
+          "type": "object",
+          "description": "Encryption information used for the command exchange.",
+          "properties": {
+            "protocol": {
+              "type": "string",
+              "description": "Encryption protocol."
+            }
+          }
+        }
+      }
+    },
+    "status": {
+      "type": "object",
+      "description": "Property. Current execution status of the reconfiguration command.",
+      "properties": {
+        "state": {
+          "type": "string",
+          "enum": [
+            "pending",
+            "inProgress",
+            "completed",
+            "failed"
+          ],
+          "description": "Current state of the reconfiguration command."
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,93 @@
+---
+components:
+  schemas:
+    UserSelectedCountermeasure:
+      x-ngsi:
+        uri-prefix: "https://raw.githubusercontent.com/H2020-MEDIATE/Mediate_Data_Model_Public/main/M6userSelectedCountermeasureMessage/schema.json"
+
+      description: >-
+        Schema for MEDIATE Message M6. This message publishes the countermeasure
+        selected by the user from the Dashboard to the Orchestrator and then to
+        the Policy Manager.
+      type: object
+
+      id:
+        anyOf:
+          - description: Property. Identifier format of any NGSI entity.
+            maxLength: 256
+            minLength: 1
+            pattern: '^[\w\-\.\{\}\$\+\*\[\]`|~^@!,:\\]+$'
+            type: string
+        format: uri
+        type: string
+        description: Unique identifier of this user-selected countermeasure entity.
+        x-ngsi:
+          type: Property
+
+      required:
+        - id
+        - type
+        - timestamp
+
+      properties:
+        type:
+          type: string
+          enum:
+            - userSelectedCountermeasure
+          description: NGSI-LD entity type. It has to be userSelectedCountermeasure.
+          x-ngsi:
+            type: Property
+
+        timestamp:
+          type: string
+          format: date-time
+          description: >-
+            Date and time at which the user selected the countermeasure.
+          x-ngsi:
+            type: Property
+
+        event:
+          anyOf:
+            - description: Property. Identifier format of any NGSI entity.
+              maxLength: 256
+              minLength: 1
+              pattern: '^[\w\-\.\{\}\$\+\*\[\]`|~^@!,:\\]+$'
+              type: string
+          format: uri
+          type: string
+          description: Event entity for which the countermeasure was selected.
+          x-ngsi:
+            type: Relationship
+
+        selectedCountermeasure:
+          anyOf:
+            - description: Property. Identifier format of any NGSI entity.
+              maxLength: 256
+              minLength: 1
+              pattern: '^[\w\-\.\{\}\$\+\*\[\]`|~^@!,:\\]+$'
+              type: string
+          format: uri
+          type: string
+          description: Countermeasure entity selected by the user.
+          x-ngsi:
+            type: Relationship
+
+info:
+  title: MEDIATE M6 User Selected Countermeasure
+  version: "0.1.0"
+  description: >-
+    Data model for MEDIATE Message M6, used by the Dashboard to publish the
+    user-selected countermeasure to the Orchestrator and Policy Manager.
+
+openapi: "3.0.3"
+
+paths:
+  /ngsi-ld/v1/entities:
+    get:
+      responses:
+        "200":
+          description: OK
+          content:
+            application/ld+json:
+              schema:
+                type: object

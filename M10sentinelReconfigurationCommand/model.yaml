@@ -1,0 +1,244 @@
+---
+components:
+  schemas:
+    SentinelReconfigurationCommand:
+      x-ngsi:
+        uri-prefix: "https://raw.githubusercontent.com/H2020-MEDIATE/Mediate_Data_Model_Public/main/M10sentinelReconfigurationCommand/schema.json"
+
+      description: >-
+        Schema for MEDIATE Message M10. This message initiates a reconfiguration
+        command from the Sentinel Reconfiguration Deployment Unit to the target
+        Sentinel. It contains deployment information, ordered actions, security
+        metadata, and execution status.
+      type: object
+
+      id:
+        anyOf:
+          - description: Property. Identifier format of any NGSI entity.
+            maxLength: 256
+            minLength: 1
+            pattern: '^[\w\-\.\{\}\$\+\*\[\]`|~^@!,:\\]+$'
+            type: string
+        format: uri
+        type: string
+        description: Unique identifier of this Sentinel reconfiguration command.
+        x-ngsi:
+          type: Property
+
+      required:
+        - id
+        - type
+        - timestamp
+
+      properties:
+        type:
+          type: string
+          enum:
+            - sentinelReconfigurationCommand
+          description: >-
+            NGSI-LD entity type. It has to be
+            sentinelReconfigurationCommand.
+          x-ngsi:
+            type: Property
+
+        deploymentUnitId:
+          type: string
+          description: >-
+            Identifier of the Sentinel Reconfiguration Deployment Unit sending
+            the command.
+          x-ngsi:
+            type: Property
+
+        targetSentinel:
+          type: object
+          description: >-
+            Target Sentinel entity that must execute the reconfiguration command,
+            with contextual metadata attached to the relationship.
+          properties:
+            object:
+              anyOf:
+                - description: Property. Identifier format of any NGSI entity.
+                  maxLength: 256
+                  minLength: 1
+                  pattern: '^[\w\-\.\{\}\$\+\*\[\]`|~^@!,:\\]+$'
+                  type: string
+              format: uri
+              type: string
+              description: Identifier of the target Sentinel entity.
+              x-ngsi:
+                type: Relationship
+
+            sentinelType:
+              type: string
+              enum:
+                - sentinel-hardware
+                - sentinel-edge
+                - sentinel-cloud
+              description: Type/category of the target Sentinel.
+              x-ngsi:
+                type: Property
+
+            ipAddress:
+              type: string
+              description: IP address of the target Sentinel.
+              x-ngsi:
+                type: Property
+
+          x-ngsi:
+            type: Relationship
+
+        timestamp:
+          type: string
+          format: date-time
+          description: >-
+            Date and time at which the Sentinel reconfiguration command was
+            generated.
+          x-ngsi:
+            type: Property
+
+        deployment:
+          type: object
+          description: >-
+            Deployment information associated with the reconfiguration command.
+          properties:
+            configurationId:
+              type: array
+              description: List of configuration identifiers to be applied.
+              items:
+                type: string
+
+            version:
+              type: string
+              description: Version of the deployment configuration.
+
+            priority:
+              type: string
+              enum:
+                - high
+                - regular
+                - low
+              description: Priority of the reconfiguration command.
+
+          x-ngsi:
+            type: Property
+
+        actions:
+          type: array
+          description: >-
+            Ordered list of actions to be executed by the target Sentinel.
+          items:
+            type: object
+            properties:
+              step:
+                type: integer
+                minimum: 1
+                description: Execution step number.
+
+              actionType:
+                type: string
+                enum:
+                  - pre_check
+                  - sw_configuration
+                  - fw_configuration
+                  - hw_configuration
+                  - restart_services
+                description: Type of action to be executed.
+
+              description:
+                type: string
+                description: Human-readable description of the action.
+
+              expectedResult:
+                type: string
+                description: Expected result of the action.
+
+              components:
+                type: array
+                description: Software components affected by the action.
+                items:
+                  type: string
+
+              version:
+                type: array
+                description: >-
+                  Version identifiers associated with firmware or hardware
+                  configuration actions.
+                items:
+                  type: string
+
+              services:
+                type: array
+                description: Services affected by the action.
+                items:
+                  type: string
+
+          x-ngsi:
+            type: Property
+
+        security:
+          type: object
+          description: >-
+            Security metadata associated with the command, kept as provided by
+            the partner payload.
+          properties:
+            authentication:
+              type: object
+              description: Authentication information.
+              properties:
+                method:
+                  type: string
+                  description: Authentication method.
+
+                token:
+                  type: string
+                  description: >-
+                    Authentication token as provided in the partner payload. Its
+                    exact usage should be clarified with the responsible
+                    partners before implementation.
+
+            encryption:
+              type: object
+              description: Encryption information used for the command exchange.
+              properties:
+                protocol:
+                  type: string
+                  description: Encryption protocol.
+
+          x-ngsi:
+            type: Property
+
+        status:
+          type: object
+          description: Current execution status of the reconfiguration command.
+          properties:
+            state:
+              type: string
+              enum:
+                - pending
+                - inProgress
+                - completed
+                - failed
+              description: Current state of the reconfiguration command.
+
+          x-ngsi:
+            type: Property
+
+info:
+  title: MEDIATE M10 Sentinel Reconfiguration Command
+  version: "0.1.0"
+  description: >-
+    Data model for MEDIATE Message M10, used by the Sentinel Reconfiguration
+    Deployment Unit to initiate reconfiguration on a target Sentinel.
+
+openapi: "3.0.3"
+
+paths:
+  /ngsi-ld/v1/entities:
+    get:
+      responses:
+        "200":
+          description: OK
+          content:
+            application/ld+json:
+              schema:
+                type: object

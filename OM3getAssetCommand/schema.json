@@ -1,0 +1,47 @@
+{
+  "$schema": "http://json-schema.org/schema#",
+  "title": "GetAssetCommand",
+  "description": "Schema for Service Manager registry retrieval command OM3. This command is sent by the Orchestrator to the Service Manager to request the full representation of a specific Asset.",
+  "type": "object",
+  "id": {
+    "$ref": "https://smart-data-models.github.io/data-models/common-schema.json#/definitions/EntityIdentifierType"
+  },
+  "required": [
+    "id",
+    "type",
+    "timestamp"
+  ],
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": [
+        "getAssetCommand"
+      ],
+      "description": "NGSI-LD entity type. It has to be getAssetCommand."
+    },
+    "originator": {
+      "type": "string",
+      "enum": [
+        "ORCHESTRATOR"
+      ],
+      "description": "Property. Component that generated the command."
+    },
+    "messageId": {
+      "type": "string",
+      "description": "Property. Unique identifier of this command message."
+    },
+    "correlationId": {
+      "type": "string",
+      "description": "Property. Identifier used to correlate this command with the corresponding AssetResponseEvent."
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Property. Date and time at which the command was generated."
+    },
+    "assetId": {
+      "$ref": "https://smart-data-models.github.io/data-models/common-schema.json#/definitions/EntityIdentifierType",
+      "description": "Relationship. Asset entity requested by the Orchestrator."
+    }
+  }
+}

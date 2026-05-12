@@ -1,0 +1,165 @@
+---
+components:
+  schemas:
+    DssMainOutput:
+      x-ngsi:
+        uri-prefix: "https://raw.githubusercontent.com/H2020-MEDIATE/Mediate_Data_Model_Public/main/M4dssMainOutputMessage/schema.json"
+
+      description: >-
+        Schema for MEDIATE Message M4. This message publishes the DSS main
+        output, including the detected attack information and the ranked list of
+        recommended countermeasures, from the DSS to the Overwatch Broker and
+        then to the Policy Manager.
+      type: object
+
+      id:
+        anyOf:
+          - description: Property. Identifier format of any NGSI entity.
+            maxLength: 256
+            minLength: 1
+            pattern: ^[\w\-\.\{\}\$\+\*\[\]`|~^@!,:\\]+$
+            type: string
+        format: uri
+        type: string
+        description: Unique identifier of this DSS main output message.
+        x-ngsi:
+          type: Property
+
+      required:
+        - id
+        - type
+        - timestamp
+
+      properties:
+        type:
+          type: string
+          enum:
+            - dssMainOutput
+          description: NGSI-LD entity type. It has to be dssMainOutput.
+          x-ngsi:
+            type: Property
+
+        timestamp:
+          type: string
+          format: date-time
+          description: >-
+            Date and time at which the DSS main output was generated.
+          x-ngsi:
+            type: Property
+
+        event:
+          anyOf:
+            - description: Property. Identifier format of any NGSI entity.
+              maxLength: 256
+              minLength: 1
+              pattern: ^[\w\-\.\{\}\$\+\*\[\]`|~^@!,:\\]+$
+              type: string
+          format: uri
+          type: string
+          description: Event entity associated with the detected attack.
+          x-ngsi:
+            type: Relationship
+
+        protectedAsset:
+          anyOf:
+            - description: Property. Identifier format of any NGSI entity.
+              maxLength: 256
+              minLength: 1
+              pattern: ^[\w\-\.\{\}\$\+\*\[\]`|~^@!,:\\]+$
+              type: string
+          format: uri
+          type: string
+          description: Protected asset affected by the detected attack.
+          x-ngsi:
+            type: Relationship
+
+        detectedAttackLabel:
+          type: string
+          description: Label of the detected attack.
+          x-ngsi:
+            type: Property
+
+        detectedAttackConfidenceScore:
+          type: number
+          minimum: 0
+          maximum: 1
+          description: Confidence score associated with the detected attack.
+          x-ngsi:
+            type: Property
+
+        detectedAttackExplanation:
+          type: string
+          description: Explanation produced by the DSS for the detected attack.
+          x-ngsi:
+            type: Property
+
+        recommendedCountermeasures:
+          type: array
+          description: >-
+            Ranked list of countermeasures recommended by the DSS. Each item
+            references a countermeasure entity and includes recommendation
+            metadata.
+          items:
+            type: object
+            properties:
+              object:
+                anyOf:
+                  - description: Property. Identifier format of any NGSI entity.
+                    maxLength: 256
+                    minLength: 1
+                    pattern: ^[\w\-\.\{\}\$\+\*\[\]`|~^@!,:\\]+$
+                    type: string
+                format: uri
+                type: string
+                description: Countermeasure entity recommended by the DSS.
+                x-ngsi:
+                  type: Relationship
+
+              rank:
+                type: integer
+                minimum: 1
+                description: >-
+                  Property. Position of the countermeasure in the recommendation
+                  list.
+                x-ngsi:
+                  type: Property
+
+              confidenceScore:
+                type: number
+                minimum: 0
+                maximum: 1
+                description: >-
+                  Property. Estimated suitability score of the recommended
+                  countermeasure.
+                x-ngsi:
+                  type: Property
+
+              explanation:
+                type: string
+                description: >-
+                  Property. Explanation justifying why this countermeasure was
+                  recommended.
+                x-ngsi:
+                  type: Property
+          x-ngsi:
+            type: Relationship
+
+info:
+  title: MEDIATE M4 DSS Main Output
+  version: "0.1.0"
+  description: >-
+    Data model for MEDIATE Message M4, used to publish the DSS main output with
+    detected attack information and ranked recommended countermeasures.
+
+openapi: "3.0.3"
+
+paths:
+  /ngsi-ld/v1/entities:
+    get:
+      responses:
+        "200":
+          description: OK
+          content:
+            application/ld+json:
+              schema:
+                type: object

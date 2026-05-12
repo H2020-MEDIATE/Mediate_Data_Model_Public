@@ -1,0 +1,43 @@
+{
+  "$schema": "http://json-schema.org/schema#",
+  "title": "GetOverwatchesFullCommand",
+  "description": "Schema for Service Manager registry retrieval command OM1. This command is sent by the Orchestrator to the Service Manager to request the full list of registered Overwatches, including their associated Sentinels.",
+  "type": "object",
+  "id": {
+    "$ref": "https://smart-data-models.github.io/data-models/common-schema.json#/definitions/EntityIdentifierType"
+  },
+  "required": [
+    "id",
+    "type",
+    "timestamp"
+  ],
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": [
+        "getOverwatchesFullCommand"
+      ],
+      "description": "NGSI-LD entity type. It has to be getOverwatchesFullCommand."
+    },
+    "originator": {
+      "type": "string",
+      "enum": [
+        "ORCHESTRATOR"
+      ],
+      "description": "Property. Component that generated the command."
+    },
+    "messageId": {
+      "type": "string",
+      "description": "Property. Unique identifier of this command message."
+    },
+    "correlationId": {
+      "type": "string",
+      "description": "Property. Identifier used to correlate this command with the corresponding response event."
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Property. Date and time at which the command was generated."
+    }
+  }
+}

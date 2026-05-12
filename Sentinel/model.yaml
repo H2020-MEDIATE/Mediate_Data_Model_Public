@@ -1,0 +1,141 @@
+---
+components:
+  schemas:
+    Sentinel:
+      x-ngsi:
+        uri-prefix: "https://raw.githubusercontent.com/H2020-MEDIATE/Mediate_Data_Model_Public/main/Sentinel/schema.json"
+
+      description: >-
+        Schema for the MEDIATE Sentinel entity. A Sentinel represents a monitored
+        or managed component registered in the Service Manager registry. It
+        includes operational status, threat status, heartbeat information, its
+        related Overwatch, managed Assets, reconfiguration status, configuration
+        version, and registration timestamp.
+      type: object
+
+      id:
+        anyOf:
+          - description: Property. Identifier format of any NGSI entity.
+            maxLength: 256
+            minLength: 1
+            pattern: '^[\w\-\.\{\}\$\+\*\[\]`|~^@!,:\\]+$'
+            type: string
+        format: uri
+        type: string
+        description: Unique identifier of this Sentinel entity.
+        x-ngsi:
+          type: Property
+
+      required:
+        - id
+        - type
+
+      properties:
+        type:
+          type: string
+          enum:
+            - sentinel
+          description: NGSI-LD entity type. It has to be sentinel.
+          x-ngsi:
+            type: Property
+
+        operationalStatus:
+          type: string
+          enum:
+            - OPERATIONAL
+            - RECONFIGURING
+            - INITIALIZING
+            - STOPPED
+            - FAILED
+          description: Current operational status of the Sentinel.
+          x-ngsi:
+            type: Property
+
+        threatStatus:
+          type: string
+          description: >-
+            Current threat status of the Sentinel. Example: UNDER_THREAT.
+          x-ngsi:
+            type: Property
+
+        lastHeartbeat:
+          type: string
+          format: date-time
+          description: >-
+            Date and time of the latest heartbeat received from the Sentinel.
+          x-ngsi:
+            type: Property
+
+        overwatch:
+          anyOf:
+            - description: Property. Identifier format of any NGSI entity.
+              maxLength: 256
+              minLength: 1
+              pattern: '^[\w\-\.\{\}\$\+\*\[\]`|~^@!,:\\]+$'
+              type: string
+          format: uri
+          type: string
+          description: Overwatch entity associated with the Sentinel.
+          x-ngsi:
+            type: Relationship
+
+        managedAssets:
+          type: array
+          description: >-
+            List of Asset entities managed or monitored by the Sentinel.
+          items:
+            anyOf:
+              - description: Property. Identifier format of any NGSI entity.
+                maxLength: 256
+                minLength: 1
+                pattern: '^[\w\-\.\{\}\$\+\*\[\]`|~^@!,:\\]+$'
+                type: string
+            format: uri
+            type: string
+          x-ngsi:
+            type: Relationship
+
+        lastReconfigurationStatus:
+          type: string
+          description: >-
+            Last known reconfiguration execution status of the Sentinel.
+            Example: SUCCESS.
+          x-ngsi:
+            type: Property
+
+        configurationVersion:
+          type: string
+          description: >-
+            Current configuration name or version associated with the Sentinel.
+          x-ngsi:
+            type: Property
+
+        registrationTimestamp:
+          type: string
+          format: date-time
+          description: >-
+            Date and time at which the Sentinel was registered in the Service
+            Manager registry.
+          x-ngsi:
+            type: Property
+
+info:
+  title: MEDIATE Sentinel
+  version: "0.1.0"
+  description: >-
+    Data model for the MEDIATE Sentinel entity, used by the Service Manager
+    registry to represent a Sentinel, its operational and threat status, its
+    related Overwatch, and its managed Assets.
+
+openapi: "3.0.3"
+
+paths:
+  /ngsi-ld/v1/entities:
+    get:
+      responses:
+        "200":
+          description: OK
+          content:
+            application/ld+json:
+              schema:
+                type: object

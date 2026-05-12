@@ -1,0 +1,108 @@
+---
+components:
+  schemas:
+    Asset:
+      x-ngsi:
+        uri-prefix: "https://raw.githubusercontent.com/H2020-MEDIATE/Mediate_Data_Model_Public/main/Asset/schema.json"
+
+      description: >-
+        Schema for the MEDIATE Asset entity. An Asset represents a protected or
+        monitored system component registered in the Service Manager registry.
+        It includes asset type, operational status, risk level, associated
+        Sentinel, last assessment timestamp, and registration timestamp.
+      type: object
+
+      id:
+        anyOf:
+          - description: Property. Identifier format of any NGSI entity.
+            maxLength: 256
+            minLength: 1
+            pattern: '^[\w\-\.\{\}\$\+\*\[\]`|~^@!,:\\]+$'
+            type: string
+        format: uri
+        type: string
+        description: Unique identifier of this Asset entity.
+        x-ngsi:
+          type: Property
+
+      required:
+        - id
+        - type
+
+      properties:
+        type:
+          type: string
+          enum:
+            - asset
+          description: NGSI-LD entity type. It has to be asset.
+          x-ngsi:
+            type: Property
+
+        assetType:
+          type: string
+          description: Type or category of the protected asset.
+          x-ngsi:
+            type: Property
+
+        operationalStatus:
+          type: string
+          description: Current operational status of the asset.
+          x-ngsi:
+            type: Property
+
+        riskLevel:
+          type: string
+          description: Current risk level associated with the asset.
+          x-ngsi:
+            type: Property
+
+        associatedSentinel:
+          anyOf:
+            - description: Property. Identifier format of any NGSI entity.
+              maxLength: 256
+              minLength: 1
+              pattern: '^[\w\-\.\{\}\$\+\*\[\]`|~^@!,:\\]+$'
+              type: string
+          format: uri
+          type: string
+          description: Sentinel entity associated with this asset.
+          x-ngsi:
+            type: Relationship
+
+        lastAssessmentTimestamp:
+          type: string
+          format: date-time
+          description: >-
+            Date and time of the latest assessment associated with this asset.
+          x-ngsi:
+            type: Property
+
+        registrationTimestamp:
+          type: string
+          format: date-time
+          description: >-
+            Date and time at which the asset was registered in the Service
+            Manager registry.
+          x-ngsi:
+            type: Property
+
+info:
+  title: MEDIATE Asset
+  version: "0.1.0"
+  description: >-
+    Data model for the MEDIATE Asset entity, used by the Service Manager
+    registry to represent a protected or monitored asset and its associated
+    Sentinel.
+
+openapi: "3.0.3"
+
+paths:
+  /ngsi-ld/v1/entities:
+    get:
+      responses:
+        "200":
+          description: OK
+          content:
+            application/ld+json:
+              schema:
+                type: object

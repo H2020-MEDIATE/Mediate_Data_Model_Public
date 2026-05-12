@@ -1,0 +1,146 @@
+{
+  "$schema": "http://json-schema.org/schema#",
+  "title": "PolicyEvaluatedCountermeasures",
+  "description": "Schema for MEDIATE Message M5. This message publishes the countermeasures evaluated by the Policy Manager, including policy evaluation history and availability, from the Policy Manager to the Overwatch Broker, Orchestrator, and Dashboard.",
+  "type": "object",
+  "id": {
+    "$ref": "https://smart-data-models.github.io/data-models/common-schema.json#/definitions/EntityIdentifierType"
+  },
+  "required": [
+    "id",
+    "type",
+    "timestamp"
+  ],
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": [
+        "policyEvaluatedCountermeasures"
+      ],
+      "description": "NGSI-LD entity type. It has to be policyEvaluatedCountermeasures."
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Property. Date and time at which the policy-evaluated countermeasures message was generated."
+    },
+    "event": {
+      "$ref": "https://smart-data-models.github.io/data-models/common-schema.json#/definitions/EntityIdentifierType",
+      "description": "Relationship. Event entity associated with the detected attack."
+    },
+    "protectedAsset": {
+      "$ref": "https://smart-data-models.github.io/data-models/common-schema.json#/definitions/EntityIdentifierType",
+      "description": "Relationship. Protected asset affected by the detected attack."
+    },
+    "detectedAttackLabel": {
+      "type": "string",
+      "description": "Property. Label of the detected attack."
+    },
+    "detectedAttackConfidenceScore": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1,
+      "description": "Property. Confidence score associated with the detected attack."
+    },
+    "detectedAttackExplanation": {
+      "type": "string",
+      "description": "Property. Explanation produced by the DSS for the detected attack."
+    },
+    "evaluatedCountermeasures": {
+      "type": "array",
+      "description": "Relationship. List of countermeasures evaluated by the Policy Manager. Each item references a countermeasure entity and includes contextual evaluation metadata.",
+      "items": {
+        "type": "object",
+        "required": [
+          "type",
+          "object",
+          "rank",
+          "confidenceScore",
+          "recommendationExplanation",
+          "evaluationHistory"
+        ],
+        "properties": {
+          "type": {
+            "type": "string",
+            "const": "Relationship",
+            "description": "Indicates that the evaluated countermeasure item is a Relationship to a countermeasure entity."
+          },
+          "object": {
+            "$ref": "https://smart-data-models.github.io/data-models/common-schema.json#/definitions/EntityIdentifierType",
+            "description": "Relationship target. Countermeasure entity evaluated by the Policy Manager."
+          },
+          "rank": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "Property. Position of the countermeasure in the recommendation list."
+          },
+          "confidenceScore": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1,
+            "description": "Property. Recommendation confidence score inherited from the DSS recommendation."
+          },
+          "recommendationExplanation": {
+            "type": "string",
+            "description": "Property. Explanation inherited from the DSS recommendation rationale."
+          },
+          "available": {
+            "type": "boolean",
+            "description": "Property. Indicates whether the countermeasure is still available or selectable after Policy Manager evaluation."
+          },
+          "evaluationHistory": {
+            "type": "array",
+            "minItems": 1,
+            "description": "Property. Chronological history of Policy Manager evaluation events for this countermeasure.",
+            "items": {
+              "type": "object",
+              "required": [
+                "eventType",
+                "timestamp"
+              ],
+              "properties": {
+                "eventType": {
+                  "type": "string",
+                  "enum": [
+                    "tryAccess",
+                    "tryAccessObligationResult",
+                    "startAccess",
+                    "startAccessObligationResult",
+                    "endAccess"
+                  ],
+                  "description": "Type of Policy Manager evaluation event."
+                },
+                "decision": {
+                  "type": "string",
+                  "enum": [
+                    "Permit",
+                    "Permit-with-obligation",
+                    "Deny"
+                  ],
+                  "description": "Policy Manager decision associated with the evaluation event."
+                },
+                "obligation": {
+                  "type": "string",
+                  "description": "Obligation associated with the decision, when applicable."
+                },
+                "result": {
+                  "type": "string",
+                  "enum": [
+                    "success",
+                    "fail"
+                  ],
+                  "description": "Result of the obligation execution, when applicable."
+                },
+                "timestamp": {
+                  "type": "string",
+                  "format": "date-time",
+                  "description": "Date and time of the evaluation event."
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,84 @@
+{
+  "$schema": "http://json-schema.org/schema#",
+  "title": "DssMainOutput",
+  "description": "Schema for MEDIATE Message M4. This message publishes the DSS main output, including the detected attack information and the ranked list of recommended countermeasures, from the DSS to the Overwatch Broker and then to the Policy Manager.",
+  "type": "object",
+  "id": {
+    "$ref": "https://smart-data-models.github.io/data-models/common-schema.json#/definitions/EntityIdentifierType"
+  },
+  "required": [
+    "id",
+    "type",
+    "timestamp"
+  ],
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": [
+        "dssMainOutput"
+      ],
+      "description": "NGSI-LD entity type. It has to be dssMainOutput."
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Property. Date and time at which the DSS main output was generated."
+    },
+    "event": {
+      "$ref": "https://smart-data-models.github.io/data-models/common-schema.json#/definitions/EntityIdentifierType",
+      "description": "Relationship. Event entity associated with the detected attack."
+    },
+    "protectedAsset": {
+      "$ref": "https://smart-data-models.github.io/data-models/common-schema.json#/definitions/EntityIdentifierType",
+      "description": "Relationship. Protected asset affected by the detected attack."
+    },
+    "detectedAttackLabel": {
+      "type": "string",
+      "description": "Property. Label of the detected attack."
+    },
+    "detectedAttackConfidenceScore": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1,
+      "description": "Property. Confidence score associated with the detected attack."
+    },
+    "detectedAttackExplanation": {
+      "type": "string",
+      "description": "Property. Explanation produced by the DSS for the detected attack."
+    },
+    "recommendedCountermeasures": {
+      "type": "array",
+      "description": "Relationship. Ranked list of countermeasures recommended by the DSS. Each item references a countermeasure entity and includes recommendation metadata.",
+      "items": {
+        "type": "object",
+        "required": [
+          "object",
+          "rank",
+          "confidenceScore",
+          "explanation"
+        ],
+        "properties": {
+          "object": {
+            "$ref": "https://smart-data-models.github.io/data-models/common-schema.json#/definitions/EntityIdentifierType",
+            "description": "Relationship target. Countermeasure entity recommended by the DSS."
+          },
+          "rank": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "Property. Position of the countermeasure in the recommendation list."
+          },
+          "confidenceScore": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1,
+            "description": "Property. Estimated suitability score of the recommended countermeasure."
+          },
+          "explanation": {
+            "type": "string",
+            "description": "Property. Explanation justifying why this countermeasure was recommended."
+          }
+        }
+      }
+    }
+  }
+}

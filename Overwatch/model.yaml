@@ -1,0 +1,124 @@
+---
+components:
+  schemas:
+    Overwatch:
+      x-ngsi:
+        uri-prefix: "https://raw.githubusercontent.com/H2020-MEDIATE/Mediate_Data_Model_Public/main/Overwatch/schema.json"
+
+      description: >-
+        Schema for the MEDIATE Overwatch entity. An Overwatch represents a
+        registry-managed component supervising a set of Sentinels and maintaining
+        operational and security status information.
+      type: object
+
+      id:
+        anyOf:
+          - description: Property. Identifier format of any NGSI entity.
+            maxLength: 256
+            minLength: 1
+            pattern: '^[\w\-\.\{\}\$\+\*\[\]`|~^@!,:\\]+$'
+            type: string
+        format: uri
+        type: string
+        description: Unique identifier of this Overwatch entity.
+        x-ngsi:
+          type: Property
+
+      required:
+        - id
+        - type
+
+      properties:
+        type:
+          type: string
+          enum:
+            - overwatch
+          description: NGSI-LD entity type. It has to be overwatch.
+          x-ngsi:
+            type: Property
+
+        operationalStatus:
+          type: string
+          enum:
+            - OPERATIONAL
+            - RECONFIGURING
+            - INITIALIZING
+            - STOPPED
+            - FAILED
+          description: Current operational status of the Overwatch.
+          x-ngsi:
+            type: Property
+
+        securityStatus:
+          type: string
+          description: >-
+            Current security status or security level associated with the
+            Overwatch. Example: AMBER.
+          x-ngsi:
+            type: Property
+
+        registeredSentinels:
+          type: integer
+          minimum: 0
+          description: Number of Sentinels registered under this Overwatch.
+          x-ngsi:
+            type: Property
+
+        sentinelsUnderThreat:
+          type: integer
+          minimum: 0
+          description: Number of Sentinels currently under threat for this Overwatch.
+          x-ngsi:
+            type: Property
+
+        lastHeartbeat:
+          type: string
+          format: date-time
+          description: >-
+            Date and time of the latest heartbeat associated with this Overwatch.
+          x-ngsi:
+            type: Property
+
+        managedSentinels:
+          type: array
+          description: List of Sentinel entities managed by this Overwatch.
+          items:
+            anyOf:
+              - description: Property. Identifier format of any NGSI entity.
+                maxLength: 256
+                minLength: 1
+                pattern: '^[\w\-\.\{\}\$\+\*\[\]`|~^@!,:\\]+$'
+                type: string
+            format: uri
+            type: string
+          x-ngsi:
+            type: Relationship
+
+        registrationTimestamp:
+          type: string
+          format: date-time
+          description: >-
+            Date and time at which the Overwatch was registered in the Service
+            Manager registry.
+          x-ngsi:
+            type: Property
+
+info:
+  title: MEDIATE Overwatch
+  version: "0.1.0"
+  description: >-
+    Data model for the MEDIATE Overwatch entity, used by the Service Manager
+    registry to represent an Overwatch and its associated Sentinels.
+
+openapi: "3.0.3"
+
+paths:
+  /ngsi-ld/v1/entities:
+    get:
+      responses:
+        "200":
+          description: OK
+          content:
+            application/ld+json:
+              schema:
+                type: object

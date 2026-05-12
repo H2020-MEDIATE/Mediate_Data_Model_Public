@@ -1,0 +1,64 @@
+{
+  "$schema": "http://json-schema.org/schema#",
+  "title": "Overwatch",
+  "description": "Schema for the MEDIATE Overwatch entity. An Overwatch represents a registry-managed component supervising a set of Sentinels and maintaining operational and security status information.",
+  "type": "object",
+  "id": {
+    "$ref": "https://smart-data-models.github.io/data-models/common-schema.json#/definitions/EntityIdentifierType"
+  },
+  "required": [
+    "id",
+    "type"
+  ],
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": [
+        "overwatch"
+      ],
+      "description": "NGSI-LD entity type. It has to be overwatch."
+    },
+    "operationalStatus": {
+      "type": "string",
+      "enum": [
+        "OPERATIONAL",
+        "RECONFIGURING",
+        "INITIALIZING",
+        "STOPPED",
+        "FAILED"
+      ],
+      "description": "Property. Current operational status of the Overwatch."
+    },
+    "securityStatus": {
+      "type": "string",
+      "description": "Property. Current security status or security level associated with the Overwatch. Example: AMBER."
+    },
+    "registeredSentinels": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Property. Number of Sentinels registered under this Overwatch."
+    },
+    "sentinelsUnderThreat": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Property. Number of Sentinels currently under threat for this Overwatch."
+    },
+    "lastHeartbeat": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Property. Date and time of the latest heartbeat associated with this Overwatch."
+    },
+    "managedSentinels": {
+      "type": "array",
+      "description": "Relationship. List of Sentinel entities managed by this Overwatch.",
+      "items": {
+        "$ref": "https://smart-data-models.github.io/data-models/common-schema.json#/definitions/EntityIdentifierType"
+      }
+    },
+    "registrationTimestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Property. Date and time at which the Overwatch was registered in the Service Manager registry."
+    }
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "$schema": "http://json-schema.org/schema#",
+  "title": "ReconfigurationExecutionPlan",
+  "description": "Schema for MEDIATE Message M8. This message initiates a reconfiguration or deployment plan from the DSS to the Overwatch Broker and then to the Sentinel Reconfiguration Deployment Unit. It contains an ordered list of execution steps, where each step associates an asset with a countermeasure.",
+  "type": "object",
+  "id": {
+    "$ref": "https://smart-data-models.github.io/data-models/common-schema.json#/definitions/EntityIdentifierType"
+  },
+  "required": [
+    "id",
+    "type",
+    "timestamp"
+  ],
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": [
+        "reconfigurationExecutionPlan"
+      ],
+      "description": "NGSI-LD entity type. It has to be reconfigurationExecutionPlan."
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Property. Date and time at which the reconfiguration execution plan was generated."
+    },
+    "orderedItems": {
+      "type": "array",
+      "description": "Property. Ordered list of reconfiguration or deployment steps to be executed by the Sentinel Reconfiguration Deployment Unit.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "stepId": {
+            "type": "string",
+            "description": "Property. Local identifier of the countermeasure execution step within the execution plan."
+          },
+          "order": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "Property. Execution order of the step within the plan."
+          },
+          "asset": {
+            "$ref": "https://smart-data-models.github.io/data-models/common-schema.json#/definitions/EntityIdentifierType",
+            "description": "Relationship. Asset entity targeted by this execution step."
+          },
+          "countermeasure": {
+            "$ref": "https://smart-data-models.github.io/data-models/common-schema.json#/definitions/EntityIdentifierType",
+            "description": "Relationship. Countermeasure entity to be applied to the target asset."
+          }
+        }
+      }
+    }
+  }
+}

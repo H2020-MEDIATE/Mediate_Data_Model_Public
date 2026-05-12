@@ -1,0 +1,159 @@
+{
+  "$schema": "http://json-schema.org/schema#",
+  "title": "PredefinedSentinelConfiguration",
+  "description": "Schema for MEDIATE Message M9. This message provides a predefined Sentinel configuration from the Predefined Configuration Libraries to the Sentinel Reconfiguration Deployment Unit. It contains the request context, the target Sentinel, the configuration payload, integrity information, and retrieval/validation status.",
+  "type": "object",
+  "id": {
+    "$ref": "https://smart-data-models.github.io/data-models/common-schema.json#/definitions/EntityIdentifierType"
+  },
+  "required": [
+    "id",
+    "type",
+    "timestamp"
+  ],
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": [
+        "predefinedSentinelConfiguration"
+      ],
+      "description": "NGSI-LD entity type. It has to be predefinedSentinelConfiguration."
+    },
+    "deploymentUnitId": {
+      "type": "string",
+      "description": "Property. Identifier of the Sentinel Reconfiguration Deployment Unit receiving the predefined configuration."
+    },
+    "source": {
+      "type": "string",
+      "description": "Property. Source component or predefined configuration library providing the Sentinel configuration."
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Property. Date and time at which the predefined Sentinel configuration message was generated."
+    },
+    "request": {
+      "type": "object",
+      "description": "Property. Request context associated with the predefined Sentinel configuration response.",
+      "properties": {
+        "configurationId": {
+          "type": "string",
+          "description": "Identifier of the requested configuration."
+        },
+        "sentinelType": {
+          "type": "array",
+          "description": "List of Sentinel types targeted by the configuration.",
+          "items": {
+            "type": "string"
+          }
+        },
+        "trigger": {
+          "type": "object",
+          "description": "Structured value describing what triggered the configuration retrieval.",
+          "properties": {
+            "triggerType": {
+              "type": "string",
+              "description": "Type of trigger that caused the configuration retrieval."
+            },
+            "policyId": {
+              "type": "string",
+              "description": "Identifier of the policy related to the trigger."
+            }
+          }
+        },
+        "targetSentinel": {
+          "$ref": "https://smart-data-models.github.io/data-models/common-schema.json#/definitions/EntityIdentifierType",
+          "description": "Relationship. Sentinel entity targeted by this predefined configuration."
+        }
+      }
+    },
+    "configurationPayload": {
+      "type": "object",
+      "description": "Property. Payload containing the predefined Sentinel configuration to be applied or deployed.",
+      "properties": {
+        "version": {
+          "type": "string",
+          "description": "Version of the predefined Sentinel configuration payload."
+        },
+        "description": {
+          "type": "array",
+          "description": "List of configuration update categories included in the payload.",
+          "items": {
+            "type": "string"
+          }
+        },
+        "sentinelModules": {
+          "type": "array",
+          "description": "List of Sentinel modules to be configured or updated.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "Name of the Sentinel module."
+              },
+              "action": {
+                "type": "string",
+                "description": "Action to be applied to the Sentinel module."
+              },
+              "ruleset": {
+                "type": "string",
+                "description": "Ruleset associated with the Sentinel module, when applicable."
+              },
+              "key": {
+                "type": "string",
+                "description": "Key or reference associated with the Sentinel module, when applicable."
+              }
+            }
+          }
+        },
+        "firmware": {
+          "type": "object",
+          "description": "Structured firmware information associated with the predefined Sentinel configuration.",
+          "properties": {
+            "required": {
+              "type": "boolean",
+              "description": "Indicates whether firmware configuration or update is required."
+            },
+            "version": {
+              "type": "string",
+              "description": "Firmware version required by the configuration."
+            }
+          }
+        }
+      }
+    },
+    "integrity": {
+      "type": "object",
+      "description": "Property. Integrity information used to verify the predefined Sentinel configuration payload.",
+      "properties": {
+        "checksum": {
+          "type": "string",
+          "description": "Checksum value of the configuration payload."
+        },
+        "signature": {
+          "type": "string",
+          "description": "Signature associated with the configuration payload."
+        }
+      }
+    },
+    "status": {
+      "type": "object",
+      "description": "Property. Retrieval and validation status of the predefined Sentinel configuration.",
+      "properties": {
+        "state": {
+          "type": "string",
+          "description": "Current state of the configuration retrieval process."
+        },
+        "validated": {
+          "type": "boolean",
+          "description": "Indicates whether the configuration payload has been validated."
+        },
+        "validationMethod": {
+          "type": "string",
+          "description": "Method used to validate the configuration payload."
+        }
+      }
+    }
+  }
+}

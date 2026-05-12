@@ -1,0 +1,50 @@
+{
+  "$schema": "http://json-schema.org/schema#",
+  "title": "PolicyCountermeasureDecision",
+  "description": "Schema for MEDIATE Message M7. This message publishes the final Policy Manager countermeasure decision back to the DSS. It references the related M5 policy evaluation message and indicates the automatic selection, user selection, and final selected countermeasure to be enforced.",
+  "type": "object",
+  "id": {
+    "$ref": "https://smart-data-models.github.io/data-models/common-schema.json#/definitions/EntityIdentifierType"
+  },
+  "required": [
+    "id",
+    "type",
+    "timestamp"
+  ],
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": [
+        "policyCountermeasureDecision"
+      ],
+      "description": "NGSI-LD entity type. It has to be policyCountermeasureDecision."
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Property. Date and time at which the policy countermeasure decision was generated."
+    },
+    "relatedPolicyEvaluation": {
+      "$ref": "https://smart-data-models.github.io/data-models/common-schema.json#/definitions/EntityIdentifierType",
+      "description": "Relationship. Reference to the related M5 PolicyEvaluatedCountermeasures message containing the full Policy Manager evaluation details."
+    },
+    "automaticSelection": {
+      "type": "array",
+      "description": "Relationship. Countermeasures selected as candidates for enforcement by the Policy Manager.",
+      "items": {
+        "$ref": "https://smart-data-models.github.io/data-models/common-schema.json#/definitions/EntityIdentifierType"
+      }
+    },
+    "userSelection": {
+      "type": "array",
+      "description": "Relationship. Countermeasures selected as candidates for enforcement by the user.",
+      "items": {
+        "$ref": "https://smart-data-models.github.io/data-models/common-schema.json#/definitions/EntityIdentifierType"
+      }
+    },
+    "selectedCountermeasure": {
+      "$ref": "https://smart-data-models.github.io/data-models/common-schema.json#/definitions/EntityIdentifierType",
+      "description": "Relationship. Final countermeasure selected for enforcement and sent to the DSS."
+    }
+  }
+}

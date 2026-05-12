@@ -1,0 +1,242 @@
+---
+components:
+  schemas:
+    PredefinedSentinelConfiguration:
+      x-ngsi:
+        uri-prefix: "https://raw.githubusercontent.com/H2020-MEDIATE/Mediate_Data_Model_Public/main/M9predefinedSentinelConfiguration/schema.json"
+
+      description: >-
+        Schema for MEDIATE Message M9. This message provides a predefined
+        Sentinel configuration from the Predefined Configuration Libraries to
+        the Sentinel Reconfiguration Deployment Unit. It contains the request
+        context, the target Sentinel, the configuration payload, integrity
+        information, and retrieval/validation status.
+      type: object
+
+      id:
+        anyOf:
+          - description: Property. Identifier format of any NGSI entity.
+            maxLength: 256
+            minLength: 1
+            pattern: '^[\w\-\.\{\}\$\+\*\[\]`|~^@!,:\\]+$'
+            type: string
+        format: uri
+        type: string
+        description: Unique identifier of this predefined Sentinel configuration message.
+        x-ngsi:
+          type: Property
+
+      required:
+        - id
+        - type
+        - timestamp
+
+      properties:
+        type:
+          type: string
+          enum:
+            - predefinedSentinelConfiguration
+          description: >-
+            NGSI-LD entity type. It has to be
+            predefinedSentinelConfiguration.
+          x-ngsi:
+            type: Property
+
+        deploymentUnitId:
+          type: string
+          description: >-
+            Identifier of the Sentinel Reconfiguration Deployment Unit receiving
+            the predefined configuration.
+          x-ngsi:
+            type: Property
+
+        source:
+          type: string
+          description: >-
+            Source component or predefined configuration library providing the
+            Sentinel configuration.
+          x-ngsi:
+            type: Property
+
+        timestamp:
+          type: string
+          format: date-time
+          description: >-
+            Date and time at which the predefined Sentinel configuration message
+            was generated.
+          x-ngsi:
+            type: Property
+
+        request:
+          type: object
+          description: >-
+            Request context associated with the predefined Sentinel configuration
+            response.
+          properties:
+            configurationId:
+              type: string
+              description: Identifier of the requested configuration.
+              x-ngsi:
+                type: Property
+
+            sentinelType:
+              type: array
+              description: List of Sentinel types targeted by the configuration.
+              items:
+                type: string
+              x-ngsi:
+                type: Property
+
+            trigger:
+              type: object
+              description: >-
+                Structured value describing what triggered the configuration
+                retrieval.
+              properties:
+                triggerType:
+                  type: string
+                  description: Type of trigger that caused the configuration retrieval.
+
+                policyId:
+                  type: string
+                  description: Identifier of the policy related to the trigger.
+              x-ngsi:
+                type: Property
+
+            targetSentinel:
+              anyOf:
+                - description: Property. Identifier format of any NGSI entity.
+                  maxLength: 256
+                  minLength: 1
+                  pattern: '^[\w\-\.\{\}\$\+\*\[\]`|~^@!,:\\]+$'
+                  type: string
+              format: uri
+              type: string
+              description: Sentinel entity targeted by this predefined configuration.
+              x-ngsi:
+                type: Relationship
+
+          x-ngsi:
+            type: Property
+
+        configurationPayload:
+          type: object
+          description: >-
+            Payload containing the predefined Sentinel configuration to be
+            applied or deployed.
+          properties:
+            version:
+              type: string
+              description: Version of the predefined Sentinel configuration payload.
+
+            description:
+              type: array
+              description: >-
+                List of configuration update categories included in the payload.
+              items:
+                type: string
+
+            sentinelModules:
+              type: array
+              description: List of Sentinel modules to be configured or updated.
+              items:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    description: Name of the Sentinel module.
+
+                  action:
+                    type: string
+                    description: Action to be applied to the Sentinel module.
+
+                  ruleset:
+                    type: string
+                    description: >-
+                      Ruleset associated with the Sentinel module, when
+                      applicable.
+
+                  key:
+                    type: string
+                    description: >-
+                      Key or reference associated with the Sentinel module, when
+                      applicable.
+
+            firmware:
+              type: object
+              description: >-
+                Structured firmware information associated with the predefined
+                Sentinel configuration.
+              properties:
+                required:
+                  type: boolean
+                  description: >-
+                    Indicates whether firmware configuration or update is
+                    required.
+
+                version:
+                  type: string
+                  description: Firmware version required by the configuration.
+
+          x-ngsi:
+            type: Property
+
+        integrity:
+          type: object
+          description: >-
+            Integrity information used to verify the predefined Sentinel
+            configuration payload.
+          properties:
+            checksum:
+              type: string
+              description: Checksum value of the configuration payload.
+
+            signature:
+              type: string
+              description: Signature associated with the configuration payload.
+
+          x-ngsi:
+            type: Property
+
+        status:
+          type: object
+          description: >-
+            Retrieval and validation status of the predefined Sentinel
+            configuration.
+          properties:
+            state:
+              type: string
+              description: Current state of the configuration retrieval process.
+
+            validated:
+              type: boolean
+              description: >-
+                Indicates whether the configuration payload has been validated.
+
+            validationMethod:
+              type: string
+              description: Method used to validate the configuration payload.
+
+          x-ngsi:
+            type: Property
+
+info:
+  title: MEDIATE M9 Predefined Sentinel Configuration
+  version: "0.1.0"
+  description: >-
+    Data model for MEDIATE Message M9, used by the Predefined Configuration
+    Libraries to provide a predefined Sentinel configuration to the Sentinel
+    Reconfiguration Deployment Unit.
+
+openapi: "3.0.3"
+
+paths:
+  /ngsi-ld/v1/entities:
+    get:
+      responses:
+        "200":
+          description: OK
+          content:
+            application/ld+json:
+              schema:
+                type: object

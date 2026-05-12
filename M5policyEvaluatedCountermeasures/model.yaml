@@ -1,0 +1,256 @@
+---
+components:
+  schemas:
+    PolicyEvaluatedCountermeasures:
+      x-ngsi:
+        uri-prefix: "https://raw.githubusercontent.com/H2020-MEDIATE/Mediate_Data_Model_Public/main/M5policyEvaluatedCountermeasures/schema.json"
+
+      description: >-
+        Schema for MEDIATE Message M5. This message publishes the
+        countermeasures evaluated by the Policy Manager, including policy
+        evaluation history and availability, from the Policy Manager to the
+        Overwatch Broker, Orchestrator, and Dashboard.
+      type: object
+
+      id:
+        anyOf:
+          - description: Property. Identifier format of any NGSI entity.
+            maxLength: 256
+            minLength: 1
+            pattern: ^[\w\-\.\{\}\$\+\*\[\]`|~^@!,:\\]+$
+            type: string
+        format: uri
+        type: string
+        description: Unique identifier of this policy-evaluated countermeasures message.
+        x-ngsi:
+          type: Property
+
+      required:
+        - id
+        - type
+        - timestamp
+
+      properties:
+        type:
+          type: string
+          enum:
+            - policyEvaluatedCountermeasures
+          description: >-
+            NGSI-LD entity type. It has to be
+            policyEvaluatedCountermeasures.
+          x-ngsi:
+            type: Property
+
+        timestamp:
+          type: string
+          format: date-time
+          description: >-
+            Date and time at which the policy-evaluated countermeasures message
+            was generated.
+          x-ngsi:
+            type: Property
+
+        event:
+          anyOf:
+            - description: Property. Identifier format of any NGSI entity.
+              maxLength: 256
+              minLength: 1
+              pattern: ^[\w\-\.\{\}\$\+\*\[\]`|~^@!,:\\]+$
+              type: string
+          format: uri
+          type: string
+          description: Event entity associated with the detected attack.
+          x-ngsi:
+            type: Relationship
+
+        protectedAsset:
+          anyOf:
+            - description: Property. Identifier format of any NGSI entity.
+              maxLength: 256
+              minLength: 1
+              pattern: ^[\w\-\.\{\}\$\+\*\[\]`|~^@!,:\\]+$
+              type: string
+          format: uri
+          type: string
+          description: Protected asset affected by the detected attack.
+          x-ngsi:
+            type: Relationship
+
+        detectedAttackLabel:
+          type: string
+          description: Label of the detected attack.
+          x-ngsi:
+            type: Property
+
+        detectedAttackConfidenceScore:
+          type: number
+          minimum: 0
+          maximum: 1
+          description: Confidence score associated with the detected attack.
+          x-ngsi:
+            type: Property
+
+        detectedAttackExplanation:
+          type: string
+          description: Explanation produced by the DSS for the detected attack.
+          x-ngsi:
+            type: Property
+
+        evaluatedCountermeasures:
+          type: array
+          description: >-
+            List of countermeasures evaluated by the Policy Manager. Each item
+            references a countermeasure entity and includes contextual
+            evaluation metadata.
+          items:
+            type: object
+            required:
+              - type
+              - object
+              - rank
+              - confidenceScore
+              - recommendationExplanation
+              - evaluationHistory
+            properties:
+              type:
+                type: string
+                enum:
+                  - Relationship
+                description: >-
+                  Indicates that the evaluated countermeasure item is a
+                  Relationship to a countermeasure entity.
+
+              object:
+                anyOf:
+                  - description: Property. Identifier format of any NGSI entity.
+                    maxLength: 256
+                    minLength: 1
+                    pattern: ^[\w\-\.\{\}\$\+\*\[\]`|~^@!,:\\]+$
+                    type: string
+                format: uri
+                type: string
+                description: Countermeasure entity evaluated by the Policy Manager.
+                x-ngsi:
+                  type: Relationship
+
+              rank:
+                type: integer
+                minimum: 1
+                description: >-
+                  Property. Position of the countermeasure in the recommendation
+                  list.
+                x-ngsi:
+                  type: Property
+
+              confidenceScore:
+                type: number
+                minimum: 0
+                maximum: 1
+                description: >-
+                  Property. Recommendation confidence score inherited from the
+                  DSS recommendation.
+                x-ngsi:
+                  type: Property
+
+              recommendationExplanation:
+                type: string
+                description: >-
+                  Property. Explanation inherited from the DSS recommendation
+                  rationale.
+                x-ngsi:
+                  type: Property
+
+              available:
+                type: boolean
+                description: >-
+                  Property. Indicates whether the countermeasure is still
+                  available or selectable after Policy Manager evaluation.
+                x-ngsi:
+                  type: Property
+
+              evaluationHistory:
+                type: array
+                minItems: 1
+                description: >-
+                  Property. Chronological history of Policy Manager evaluation
+                  events for this countermeasure.
+                items:
+                  type: object
+                  required:
+                    - eventType
+                    - timestamp
+                  properties:
+                    eventType:
+                      type: string
+                      enum:
+                        - tryAccess
+                        - tryAccessObligationResult
+                        - startAccess
+                        - startAccessObligationResult
+                        - endAccess
+                      description: Type of Policy Manager evaluation event.
+                      x-ngsi:
+                        type: Property
+
+                    decision:
+                      type: string
+                      enum:
+                        - Permit
+                        - Permit-with-obligation
+                        - Deny
+                      description: >-
+                        Policy Manager decision associated with the evaluation
+                        event.
+                      x-ngsi:
+                        type: Property
+
+                    obligation:
+                      type: string
+                      description: >-
+                        Obligation associated with the decision, when
+                        applicable.
+                      x-ngsi:
+                        type: Property
+
+                    result:
+                      type: string
+                      enum:
+                        - success
+                        - fail
+                      description: >-
+                        Result of the obligation execution, when applicable.
+                      x-ngsi:
+                        type: Property
+
+                    timestamp:
+                      type: string
+                      format: date-time
+                      description: Date and time of the evaluation event.
+                      x-ngsi:
+                        type: Property
+                x-ngsi:
+                  type: Property
+
+          x-ngsi:
+            type: Relationship
+
+info:
+  title: MEDIATE M5 Policy Evaluated Countermeasures
+  version: "0.1.0"
+  description: >-
+    Data model for MEDIATE Message M5, used by the Policy Manager to publish
+    evaluated countermeasures, including decision history and availability, to
+    the Dashboard through the Overwatch Broker and Orchestrator.
+
+openapi: "3.0.3"
+
+paths:
+  /ngsi-ld/v1/entities:
+    get:
+      responses:
+        "200":
+          description: OK
+          content:
+            application/ld+json:
+              schema:
+                type: object

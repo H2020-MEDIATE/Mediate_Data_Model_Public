@@ -1,0 +1,119 @@
+---
+components:
+  schemas:
+    SentinelHeartbeat:
+      x-ngsi:
+        uri-prefix: "https://raw.githubusercontent.com/H2020-MEDIATE/Mediate_Data_Model_Public/main/M12sentinelHeartbeat/schema.json"
+
+      description: >-
+        Schema for MEDIATE Message M12. This message is periodically published
+        by a Sentinel to report its operational and health status. It is
+        consumed by the Service Manager and Orchestrator through the Overwatch
+        Broker.
+      type: object
+
+      id:
+        anyOf:
+          - description: Property. Identifier format of any NGSI entity.
+            maxLength: 256
+            minLength: 1
+            pattern: '^[\w\-\.\{\}\$\+\*\[\]`|~^@!,:\\]+$'
+            type: string
+        format: uri
+        type: string
+        description: Unique identifier of this Sentinel heartbeat message.
+        x-ngsi:
+          type: Property
+
+      required:
+        - id
+        - type
+        - timestamp
+
+      properties:
+        type:
+          type: string
+          enum:
+            - sentinelHeartbeat
+          description: NGSI-LD entity type. It has to be sentinelHeartbeat.
+          x-ngsi:
+            type: Property
+
+        timestamp:
+          type: string
+          format: date-time
+          description: >-
+            Date and time at which the Sentinel heartbeat was generated.
+          x-ngsi:
+            type: Property
+
+        originator:
+          type: string
+          description: Component that generated the heartbeat message.
+          x-ngsi:
+            type: Property
+
+        sentinel:
+          anyOf:
+            - description: Property. Identifier format of any NGSI entity.
+              maxLength: 256
+              minLength: 1
+              pattern: '^[\w\-\.\{\}\$\+\*\[\]`|~^@!,:\\]+$'
+              type: string
+          format: uri
+          type: string
+          description: Sentinel entity that generated the heartbeat.
+          x-ngsi:
+            type: Relationship
+
+        operationalStatus:
+          type: string
+          enum:
+            - OPERATIONAL
+            - RECONFIGURING
+            - INITIALIZING
+            - STOPPED
+            - FAILED
+          description: Current operational status of the Sentinel.
+          x-ngsi:
+            type: Property
+
+        healthStatus:
+          type: string
+          enum:
+            - HEALTHY
+            - OFFLINE
+            - DEGRADED
+          description: Current health status of the Sentinel.
+          x-ngsi:
+            type: Property
+
+        heartbeatIntervalSeconds:
+          type: integer
+          minimum: 0
+          description: >-
+            Expected interval, in seconds, between two heartbeat messages from
+            the Sentinel.
+          x-ngsi:
+            type: Property
+
+info:
+  title: MEDIATE M12 Sentinel Heartbeat
+  version: "0.1.0"
+  description: >-
+    Data model for MEDIATE Message M12, used by a Sentinel to periodically
+    report its operational and health status through the Overwatch Broker to the
+    Service Manager and Orchestrator.
+
+openapi: "3.0.3"
+
+paths:
+  /ngsi-ld/v1/entities:
+    get:
+      responses:
+        "200":
+          description: OK
+          content:
+            application/ld+json:
+              schema:
+                type: object

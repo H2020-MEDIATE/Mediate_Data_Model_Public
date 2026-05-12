@@ -1,0 +1,48 @@
+{
+  "$schema": "http://json-schema.org/schema#",
+  "title": "Asset",
+  "description": "Schema for the MEDIATE Asset entity. An Asset represents a protected or monitored system component registered in the Service Manager registry. It includes asset type, operational status, risk level, associated Sentinel, last assessment timestamp, and registration timestamp.",
+  "type": "object",
+  "id": {
+    "$ref": "https://smart-data-models.github.io/data-models/common-schema.json#/definitions/EntityIdentifierType"
+  },
+  "required": [
+    "id",
+    "type"
+  ],
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": [
+        "asset"
+      ],
+      "description": "NGSI-LD entity type. It has to be asset."
+    },
+    "assetType": {
+      "type": "string",
+      "description": "Property. Type or category of the protected asset."
+    },
+    "operationalStatus": {
+      "type": "string",
+      "description": "Property. Current operational status of the asset."
+    },
+    "riskLevel": {
+      "type": "string",
+      "description": "Property. Current risk level associated with the asset."
+    },
+    "associatedSentinel": {
+      "$ref": "https://smart-data-models.github.io/data-models/common-schema.json#/definitions/EntityIdentifierType",
+      "description": "Relationship. Sentinel entity associated with this asset."
+    },
+    "lastAssessmentTimestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Property. Date and time of the latest assessment associated with this asset."
+    },
+    "registrationTimestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Property. Date and time at which the asset was registered in the Service Manager registry."
+    }
+  }
+}

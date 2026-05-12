@@ -1,0 +1,76 @@
+{
+  "$schema": "http://json-schema.org/schema#",
+  "title": "M1DetectedEventMessage",
+  "description": "Schema for MEDIATE Message M1 emitted by a Sentinel when an anomaly, attack, or abnormal event is detected. The NGSI-LD entity type is used by ComDeX for type-based subscription.",
+  "type": "object",
+  "id": {
+    "$ref": "https://smart-data-models.github.io/data-models/common-schema.json#/definitions/EntityIdentifierType"
+  },
+  "required": [
+    "id",
+    "type",
+    "timestamp"
+  ],
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": [
+        "geolocation-error"
+      ],
+      "description": "NGSI-LD entity type used as the detected anomaly or attack category for ComDeX subscription."
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Property. Date and time at which the anomaly, attack, or abnormal event was detected."
+    },
+    "eventId": {
+      "type": "string",
+      "description": "Property. Identifier of the detected event. It may be a UUID or another MEDIATE event identifier."
+    },
+    "sentinelId": {
+      "$ref": "https://smart-data-models.github.io/data-models/common-schema.json#/definitions/EntityIdentifierType",
+      "description": "Relationship. Sentinel entity that detected the anomaly, attack, or abnormal event."
+    },
+    "sentinelType": {
+      "type": "string",
+      "description": "Property. Type/category of the Sentinel, for example hardware, software, edge, or cloud."
+    },
+    "eventData": {
+      "description": "Property. Raw or structured data describing the detected event.",
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "object"
+        },
+        {
+          "type": "array"
+        }
+      ]
+    },
+    "eventToolType": {
+      "type": "array",
+      "description": "Property. List of tools, sensors, or sources involved in the detection. Examples: LIDAR, Camera, GNSS, Satellite.",
+      "items": {
+        "type": "string"
+      }
+    },
+    "severityVector": {
+      "type": "array",
+      "description": "Property. Numeric severity vector provided by the Sentinel. The meaning of each position must be confirmed by the responsible partners.",
+      "items": {
+        "type": "number"
+      }
+    },
+    "mitigationAction": {
+      "type": "string",
+      "description": "Property. Suggested mitigation action associated with the detected anomaly, attack, or abnormal event."
+    },
+    "commentDetails": {
+      "type": "string",
+      "description": "Property. Additional textual details about the detected anomaly, attack, or abnormal event."
+    }
+  }
+}

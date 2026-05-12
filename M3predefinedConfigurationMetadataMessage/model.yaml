@@ -1,0 +1,211 @@
+---
+components:
+  schemas:
+    PredefinedConfigurationMetadata:
+      x-ngsi:
+        uri-prefix: "https://raw.githubusercontent.com/H2020-MEDIATE/Mediate_Data_Model_Public/main/M3predefinedConfigurationMetadataMessage/schema.json"
+
+      description: >-
+        Schema for MEDIATE Message M3. This message provides predefined
+        configuration library metadata from the Predefined Configuration
+        Libraries to the Overwatch Broker and then to the DSS.
+      type: object
+
+      id:
+        anyOf:
+          - description: Property. Identifier format of any NGSI entity.
+            maxLength: 256
+            minLength: 1
+            pattern: '^[\w\-\.\{\}\$\+\*\[\]`|~^@!,:\\]+$'
+            type: string
+        format: uri
+        type: string
+        description: Unique identifier of this predefined configuration metadata message.
+        x-ngsi:
+          type: Property
+
+      required:
+        - id
+        - type
+        - timestamp
+
+      properties:
+        type:
+          type: string
+          enum:
+            - predefinedConfigurationMetadata
+          description: >-
+            NGSI-LD entity type. It has to be
+            predefinedConfigurationMetadata.
+          x-ngsi:
+            type: Property
+
+        deploymentUnitId:
+          type: string
+          description: >-
+            Identifier of the Sentinel Reconfiguration Deployment Unit.
+          x-ngsi:
+            type: Property
+
+        source:
+          type: string
+          description: >-
+            Source component or library providing the predefined configuration
+            metadata.
+          x-ngsi:
+            type: Property
+
+        timestamp:
+          type: string
+          format: date-time
+          description: >-
+            Date and time at which the predefined configuration metadata message
+            was generated.
+          x-ngsi:
+            type: Property
+
+        request:
+          type: object
+          description: >-
+            Request-related information associated with the predefined
+            configuration metadata.
+          properties:
+            contentId:
+              type: string
+              description: Identifier of the requested or updated content.
+              x-ngsi:
+                type: Property
+
+            contentType:
+              type: string
+              enum:
+                - attack-list
+                - activation-flag
+                - sentinel-cloud
+                - sentinel-hw
+                - sentinel-sw
+              description: >-
+                Content type included in the predefined configuration metadata
+                request context.
+              x-ngsi:
+                type: Property
+
+            trigger:
+              type: object
+              description: >-
+                Information describing what triggered the metadata message.
+              properties:
+                triggerType:
+                  type: string
+                  description: Type of trigger that caused the metadata update.
+
+                contentId:
+                  type: string
+                  description: Identifier of the content related to the trigger.
+              x-ngsi:
+                type: Property
+
+            targetDSS:
+              anyOf:
+                - description: Property. Identifier format of any NGSI entity.
+                  maxLength: 256
+                  minLength: 1
+                  pattern: '^[\w\-\.\{\}\$\+\*\[\]`|~^@!,:\\]+$'
+                  type: string
+              format: uri
+              type: string
+              description: >-
+                DSS component intended to consume the predefined configuration
+                metadata.
+              x-ngsi:
+                type: Relationship
+
+          x-ngsi:
+            type: Property
+
+        configurationPayload:
+          type: object
+          description: >-
+            Payload containing the predefined configuration metadata.
+          properties:
+            version:
+              type: string
+              description: Version of the predefined configuration payload.
+
+            description:
+              type: array
+              description: List of predefined configuration metadata entries.
+              items:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    description: Name of the predefined configuration entry.
+
+                  action:
+                    type: string
+                    description: Action associated with the predefined configuration entry.
+
+                  key:
+                    type: string
+                    description: Key or reference associated with the predefined configuration entry.
+
+          x-ngsi:
+            type: Property
+
+        integrity:
+          type: object
+          description: >-
+            Integrity information used to verify the configuration payload.
+          properties:
+            checksum:
+              type: string
+              description: Checksum value of the configuration payload.
+
+            signature:
+              type: string
+              description: Signature associated with the configuration payload.
+
+          x-ngsi:
+            type: Property
+
+        status:
+          type: object
+          description: >-
+            Status of the configuration metadata retrieval and validation.
+          properties:
+            state:
+              type: string
+              description: Current state of the metadata retrieval process.
+
+            validated:
+              type: boolean
+              description: >-
+                Indicates whether the configuration payload has been validated.
+
+            validationMethod:
+              type: string
+              description: Method used to validate the configuration payload.
+
+          x-ngsi:
+            type: Property
+
+info:
+  title: MEDIATE M3 Predefined Configuration Metadata
+  version: "0.1.0"
+  description: >-
+    Data model for MEDIATE Message M3, used to provide predefined configuration
+    library metadata to the DSS.
+
+openapi: "3.0.3"
+
+paths:
+  /ngsi-ld/v1/entities:
+    get:
+      responses:
+        "200":
+          description: OK
+          content:
+            application/ld+json:
+              schema:
+                type: object

@@ -1,0 +1,183 @@
+---
+components:
+  schemas:
+    SentinelReconfigurationStatusMessage:
+      x-ngsi:
+        uri-prefix: "https://raw.githubusercontent.com/H2020-MEDIATE/Mediate_Data_Model_Public/main/M11sentinelReconfigurationStatus/schema.json"
+
+      description: >-
+        Schema for MEDIATE Message M11. This message is published by a Sentinel
+        after reconfiguration execution to report the deployment status, state
+        transition, and related Sentinel/Overwatch context. It is consumed by
+        the Service Manager and Orchestrator through the Overwatch Broker.
+      type: object
+
+      id:
+        anyOf:
+          - description: Property. Identifier format of any NGSI entity.
+            maxLength: 256
+            minLength: 1
+            pattern: '^[\w\-\.\{\}\$\+\*\[\]`|~^@!,:\\]+$'
+            type: string
+        format: uri
+        type: string
+        description: Unique identifier of this Sentinel reconfiguration status message.
+        x-ngsi:
+          type: Property
+
+      required:
+        - id
+        - type
+        - timestamp
+
+      properties:
+        type:
+          type: string
+          enum:
+            - sentinelReconfigurationStatus
+          description: >-
+            NGSI-LD entity type. It has to be
+            sentinelReconfigurationStatus
+          x-ngsi:
+            type: Property
+
+        timestamp:
+          type: string
+          format: date-time
+          description: >-
+            Date and time at which the Sentinel reconfiguration status message
+            was generated.
+          x-ngsi:
+            type: Property
+
+        originator:
+          type: string
+          description: Component that generated the message.
+          x-ngsi:
+            type: Property
+
+        sentinel:
+          anyOf:
+            - description: Property. Identifier format of any NGSI entity.
+              maxLength: 256
+              minLength: 1
+              pattern: '^[\w\-\.\{\}\$\+\*\[\]`|~^@!,:\\]+$'
+              type: string
+          format: uri
+          type: string
+          description: Sentinel entity that reports the reconfiguration status.
+          x-ngsi:
+            type: Relationship
+
+        overwatch:
+          anyOf:
+            - description: Property. Identifier format of any NGSI entity.
+              maxLength: 256
+              minLength: 1
+              pattern: '^[\w\-\.\{\}\$\+\*\[\]`|~^@!,:\\]+$'
+              type: string
+          format: uri
+          type: string
+          description: Overwatch entity associated with the reporting Sentinel.
+          x-ngsi:
+            type: Relationship
+
+        deployment:
+          type: object
+          description: >-
+            Structured deployment information associated with the applied
+            reconfiguration.
+          properties:
+            configurationId:
+              type: array
+              description: >-
+                List of configuration identifiers applied during the
+                reconfiguration.
+              items:
+                type: string
+
+            version:
+              type: string
+              description: Version of the applied deployment configuration.
+
+          x-ngsi:
+            type: Property
+
+        status:
+          type: object
+          description: >-
+            Structured execution status of the Sentinel reconfiguration.
+          properties:
+            state:
+              type: string
+              enum:
+                - pending
+                - inProgress
+                - completed
+                - failed
+              description: Current execution state of the reconfiguration.
+
+            result:
+              type: string
+              enum:
+                - success
+                - fail
+              description: Execution result of the reconfiguration.
+
+            details:
+              type: string
+              description: >-
+                Additional human-readable details about the reconfiguration
+                result.
+
+          x-ngsi:
+            type: Property
+
+        previousState:
+          type: string
+          enum:
+            - healthy
+            - degraded
+            - offline
+          description: Sentinel health state before the reconfiguration.
+          x-ngsi:
+            type: Property
+
+        currentState:
+          type: string
+          enum:
+            - healthy
+            - degraded
+            - offline
+          description: Sentinel health state after the reconfiguration.
+          x-ngsi:
+            type: Property
+
+        correlationId:
+          type: string
+          description: >-
+            Identifier used to correlate this status message with the
+            corresponding reconfiguration execution flow.
+          x-ngsi:
+            type: Property
+
+info:
+  title: MEDIATE M11 Sentinel Reconfiguration Status Message
+  version: "0.1.0"
+  description: >-
+    Data model for MEDIATE Message M11, used by a Sentinel to report the status
+    of a reconfiguration execution through the Overwatch Broker to the Service
+    Manager and Orchestrator.
+
+openapi: "3.0.3"
+
+paths:
+  /ngsi-ld/v1/entities:
+    get:
+      responses:
+        "200":
+          description: OK
+          content:
+            application/ld+json:
+              schema:
+                type: object

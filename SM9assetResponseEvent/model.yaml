@@ -1,0 +1,102 @@
+---
+components:
+  schemas:
+    AssetResponseEvent:
+      x-ngsi:
+        uri-prefix: "https://raw.githubusercontent.com/H2020-MEDIATE/Mediate_Data_Model_Public/main/SM9assetResponseEvent/schema.json"
+
+      description: >-
+        Schema for Service Manager message SM9. This event is published by the
+        Service Manager in response to GetAssetCommand and returns a reference
+        to the requested Asset entity.
+      type: object
+
+      id:
+        anyOf:
+          - description: Property. Identifier format of any NGSI entity.
+            maxLength: 256
+            minLength: 1
+            pattern: '^[\w\-\.\{\}\$\+\*\[\]`|~^@!,:\\]+$'
+            type: string
+        format: uri
+        type: string
+        description: Unique identifier of this Asset response event.
+        x-ngsi:
+          type: Property
+
+      required:
+        - id
+        - type
+        - timestamp
+
+      properties:
+        type:
+          type: string
+          enum:
+            - assetResponseEvent
+          description: NGSI-LD entity type. It has to be assetResponseEvent.
+          x-ngsi:
+            type: Property
+
+        originator:
+          type: string
+          enum:
+            - SERVICE_MANAGER
+          description: Component that generated the response event.
+          x-ngsi:
+            type: Property
+
+        messageId:
+          type: string
+          description: Unique identifier of this response message.
+          x-ngsi:
+            type: Property
+
+        correlationId:
+          type: string
+          description: >-
+            Identifier used to correlate this response event with the
+            corresponding GetAssetCommand.
+          x-ngsi:
+            type: Property
+
+        timestamp:
+          type: string
+          format: date-time
+          description: >-
+            Date and time at which the Asset response event was generated.
+          x-ngsi:
+            type: Property
+
+        asset:
+          anyOf:
+            - description: Property. Identifier format of any NGSI entity.
+              maxLength: 256
+              minLength: 1
+              pattern: '^[\w\-\.\{\}\$\+\*\[\]`|~^@!,:\\]+$'
+              type: string
+          format: uri
+          type: string
+          description: Asset entity returned by the Service Manager.
+          x-ngsi:
+            type: Relationship
+
+info:
+  title: MEDIATE SM9 Asset Response Event
+  version: "0.1.0"
+  description: >-
+    Data model for Service Manager message SM9, used to return the requested
+    Asset entity reference to the Orchestrator.
+
+openapi: "3.0.3"
+
+paths:
+  /ngsi-ld/v1/entities:
+    get:
+      responses:
+        "200":
+          description: OK
+          content:
+            application/ld+json:
+              schema:
+                type: object

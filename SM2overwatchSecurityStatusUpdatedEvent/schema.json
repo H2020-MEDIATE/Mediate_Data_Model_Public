@@ -1,0 +1,66 @@
+{
+  "$schema": "http://json-schema.org/schema#",
+  "title": "OverwatchSecurityStatusUpdatedEvent",
+  "description": "Schema for Service Manager message SM2. This event publishes an aggregate security status summary for an Overwatch after the Service Manager updates the fleet security posture based on consumed anomaly detection information.",
+  "type": "object",
+  "id": {
+    "$ref": "https://smart-data-models.github.io/data-models/common-schema.json#/definitions/EntityIdentifierType"
+  },
+  "required": [
+    "id",
+    "type",
+    "timestamp"
+  ],
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": [
+        "overwatchSecurityStatusUpdatedEvent"
+      ],
+      "description": "NGSI-LD entity type. It has to be overwatchSecurityStatusUpdatedEvent."
+    },
+    "originator": {
+      "type": "string",
+      "enum": [
+        "SERVICE_MANAGER"
+      ],
+      "description": "Property. Component that generated the event."
+    },
+    "messageId": {
+      "type": "string",
+      "description": "Property. Unique identifier of this published message."
+    },
+    "correlationId": {
+      "type": "string",
+      "description": "Property. Identifier used to correlate this event with the anomaly detection or security-status update flow."
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Property. Date and time at which the security status update event was generated."
+    },
+    "overwatch": {
+      "$ref": "https://smart-data-models.github.io/data-models/common-schema.json#/definitions/EntityIdentifierType",
+      "description": "Relationship. Overwatch entity whose security status is summarized by this event."
+    },
+    "sentinelsUnderThreat": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Property. Number of Sentinels currently under threat."
+    },
+    "totalActiveAlerts": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Property. Total number of active alerts known by the Service Manager for the related Overwatch."
+    },
+    "registeredSentinels": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Property. Total number of Sentinels registered under the related Overwatch."
+    },
+    "overallSecurityLevel": {
+      "type": "string",
+      "description": "Property. Aggregate security level computed by the Service Manager for the related Overwatch. Example: AMBER."
+    }
+  }
+}

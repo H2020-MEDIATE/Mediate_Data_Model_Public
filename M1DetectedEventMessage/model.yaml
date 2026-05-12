@@ -1,0 +1,147 @@
+---
+components:
+  schemas:
+    M1DetectedEventMessage:
+      x-ngsi:
+        uri-prefix: "https://raw.githubusercontent.com/H2020-MEDIATE/Mediate_Data_Model_Public/main/M1DetectedEventMessage/schema.json"
+
+      description: >-
+        Schema for MEDIATE Message M1 emitted by a Sentinel when an anomaly,
+        attack, or abnormal event is detected. The NGSI-LD entity type is used
+        by ComDeX for type-based subscription.
+      type: object
+
+      id:
+        anyOf:
+          - description: Property. Identifier format of any NGSI entity.
+            maxLength: 256
+            minLength: 1
+            pattern: ^[\w\-\.\{\}\$\+\*\[\]`|~^@!,:\\]+$
+            type: string
+        format: uri
+        type: string
+        description: Unique identifier of this M1 detected-event message.
+        x-ngsi:
+          type: Property
+
+      required:
+        - id
+        - type
+        - timestamp
+
+      properties:
+        type:
+          type: string
+          enum:
+            - geolocation-error
+          description: >-
+            NGSI-LD entity type used as the detected anomaly or attack category
+            for ComDeX subscription.
+          x-ngsi:
+            type: Property
+
+        timestamp:
+          type: string
+          format: date-time
+          description: >-
+            Date and time at which the anomaly, attack, or abnormal event was
+            detected.
+          x-ngsi:
+            type: Property
+
+        eventId:
+          type: string
+          description: >-
+            Identifier of the detected event. It may be a UUID or another
+            MEDIATE event identifier.
+          x-ngsi:
+            type: Property
+
+        sentinelId:
+          anyOf:
+            - description: Property. Identifier format of any NGSI entity.
+              maxLength: 256
+              minLength: 1
+              pattern: ^[\w\-\.\{\}\$\+\*\[\]`|~^@!,:\\]+$
+              type: string
+          format: uri
+          type: string
+          description: >-
+            Sentinel entity that detected the anomaly, attack, or abnormal
+            event.
+          x-ngsi:
+            type: Relationship
+
+        sentinelType:
+          type: string
+          description: >-
+            Type/category of the Sentinel, for example hardware, software, edge,
+            or cloud.
+          x-ngsi:
+            type: Property
+
+        eventData:
+          description: Raw or structured data describing the detected event.
+          oneOf:
+            - type: string
+            - type: object
+            - type: array
+          x-ngsi:
+            type: Property
+
+        eventToolType:
+          type: array
+          description: >-
+            List of tools, sensors, or sources involved in the detection.
+            Examples: LIDAR, Camera, GNSS, Satellite.
+          items:
+            type: string
+          x-ngsi:
+            type: Property
+
+        severityVector:
+          type: array
+          description: >-
+            Numeric severity vector provided by the Sentinel. The meaning of
+            each position must be confirmed by the responsible partners.
+          items:
+            type: number
+          x-ngsi:
+            type: Property
+
+        mitigationAction:
+          type: string
+          description: >-
+            Suggested mitigation action associated with the detected anomaly, attack, or
+            abnormal event.
+          x-ngsi:
+            type: Property
+            
+        commentDetails:
+          type: string
+          description: >-
+            Additional textual details about the detected anomaly, attack, or
+            abnormal event.
+          x-ngsi:
+            type: Property
+
+
+info:
+  title: MEDIATE M1 Detected Event Message
+  version: "0.1.0"
+  description: >-
+    Data model for MEDIATE Message M1. The NGSI-LD type is used by ComDeX
+    subscriptions.
+
+openapi: "3.0.3"
+
+paths:
+  /ngsi-ld/v1/entities:
+    get:
+      responses:
+        "200":
+          description: OK
+          content:
+            application/ld+json:
+              schema:
+                type: object

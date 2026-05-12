@@ -1,0 +1,138 @@
+{
+  "$schema": "http://json-schema.org/schema#",
+  "title": "PredefinedConfigurationMetadata",
+  "description": "Schema for MEDIATE Message M3. This message provides predefined configuration library metadata from the Predefined Configuration Libraries to the Overwatch Broker and then to the DSS.",
+  "type": "object",
+  "id": {
+    "$ref": "https://smart-data-models.github.io/data-models/common-schema.json#/definitions/EntityIdentifierType"
+  },
+  "required": [
+    "id",
+    "type",
+    "timestamp"
+  ],
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": [
+        "predefinedConfigurationMetadata"
+      ],
+      "description": "NGSI-LD entity type. It has to be predefinedConfigurationMetadata."
+    },
+    "deploymentUnitId": {
+      "type": "string",
+      "description": "Property. Identifier of the Sentinel Reconfiguration Deployment Unit."
+    },
+    "source": {
+      "type": "string",
+      "description": "Property. Source component or library providing the predefined configuration metadata."
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Property. Date and time at which the predefined configuration metadata message was generated."
+    },
+    "request": {
+      "type": "object",
+      "description": "Property. Request-related information associated with the predefined configuration metadata.",
+      "properties": {
+        "contentId": {
+          "type": "string",
+          "description": "Identifier of the requested or updated content."
+        },
+        "contentType": {
+          "type": "string",
+          "enum": [
+            "attack-list",
+            "activation-flag",
+            "sentinel-cloud",
+            "sentinel-hw",
+            "sentinel-sw"
+          ],
+          "description": "Content type included in the predefined configuration metadata request context."
+        },
+        "targetDSS": {
+          "$ref": "https://smart-data-models.github.io/data-models/common-schema.json#/definitions/EntityIdentifierType",
+          "description": "Relationship. DSS component intended to consume the predefined configuration metadata."
+        },
+        "trigger": {
+          "type": "object",
+          "description": "Information describing what triggered the metadata message.",
+          "properties": {
+            "triggerType": {
+              "type": "string",
+              "description": "Type of trigger that caused the metadata update."
+            },
+            "contentId": {
+              "type": "string",
+              "description": "Identifier of the content related to the trigger."
+            }
+          }
+        }
+      }
+    },
+    "configurationPayload": {
+      "type": "object",
+      "description": "Property. Payload containing the predefined configuration metadata.",
+      "properties": {
+        "version": {
+          "type": "string",
+          "description": "Version of the predefined configuration payload."
+        },
+        "description": {
+          "type": "array",
+          "description": "List of predefined configuration metadata entries.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "Name of the predefined configuration entry."
+              },
+              "action": {
+                "type": "string",
+                "description": "Action associated with the predefined configuration entry."
+              },
+              "key": {
+                "type": "string",
+                "description": "Key or reference associated with the predefined configuration entry."
+              }
+            }
+          }
+        }
+      }
+    },
+    "integrity": {
+      "type": "object",
+      "description": "Property. Integrity information used to verify the configuration payload.",
+      "properties": {
+        "checksum": {
+          "type": "string",
+          "description": "Checksum value of the configuration payload."
+        },
+        "signature": {
+          "type": "string",
+          "description": "Signature associated with the configuration payload."
+        }
+      }
+    },
+    "status": {
+      "type": "object",
+      "description": "Property. Status of the configuration metadata retrieval and validation.",
+      "properties": {
+        "state": {
+          "type": "string",
+          "description": "Current state of the metadata retrieval process."
+        },
+        "validated": {
+          "type": "boolean",
+          "description": "Indicates whether the configuration payload has been validated."
+        },
+        "validationMethod": {
+          "type": "string",
+          "description": "Method used to validate the configuration payload."
+        }
+      }
+    }
+  }
+}
