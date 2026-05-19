@@ -1,6 +1,3 @@
-Here is a better `README.md` you can use:
-
-
 # MEDIATE Data Models
 
 This repository contains the NGSI-LD data models defined for the MEDIATE project.
