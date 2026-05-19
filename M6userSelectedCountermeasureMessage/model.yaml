@@ -60,7 +60,7 @@ components:
           x-ngsi:
             type: Relationship
 
-        selectedCountermeasure:
+        userSelectedCountermeasure:
           anyOf:
             - description: Property. Identifier format of any NGSI entity.
               maxLength: 256
@@ -72,6 +72,14 @@ components:
           description: Countermeasure entity selected by the user.
           x-ngsi:
             type: Relationship
+
+        round:
+          type: integer
+          minimum: 1
+          description: >-
+            Positive integer indicating the user-interaction iteration number.
+          x-ngsi:
+            type: Property
 
 info:
   title: MEDIATE M6 User Selected Countermeasure

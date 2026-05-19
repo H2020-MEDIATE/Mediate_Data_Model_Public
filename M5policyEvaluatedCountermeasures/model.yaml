@@ -90,6 +90,23 @@ components:
           description: Confidence score associated with the detected attack.
           x-ngsi:
             type: Property
+        round:
+          type: integer
+          minimum: 1
+          description: >-
+            Positive integer indicating the user-interaction iteration number.
+          x-ngsi:
+            type: Property
+
+        finalDecisionTaken:
+          type: boolean
+          description: >-
+            Indicates whether a final countermeasure decision has already been taken.
+            If false, the Dashboard should display the evaluated countermeasures to the
+            user for selection. If true, the message is informative only and should not
+            trigger a new user decision.
+          x-ngsi:
+            type: Property
 
         detectedAttackExplanation:
           type: string

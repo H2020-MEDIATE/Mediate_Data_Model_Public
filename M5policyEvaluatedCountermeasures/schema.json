@@ -42,6 +42,15 @@
       "maximum": 1,
       "description": "Property. Confidence score associated with the detected attack."
     },
+    "round": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Property. Positive integer indicating the user-interaction iteration number."
+    },
+    "finalDecisionTaken": {
+      "type": "boolean",
+      "description": "Property. Indicates whether a final countermeasure decision has already been taken."
+    },
     "detectedAttackExplanation": {
       "type": "string",
       "description": "Property. Explanation produced by the DSS for the detected attack."

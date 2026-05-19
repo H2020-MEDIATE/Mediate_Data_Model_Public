@@ -28,9 +28,14 @@
       "$ref": "https://smart-data-models.github.io/data-models/common-schema.json#/definitions/EntityIdentifierType",
       "description": "Relationship. Event entity for which the countermeasure was selected."
     },
-    "selectedCountermeasure": {
+    "userSelectedCountermeasure": {
       "$ref": "https://smart-data-models.github.io/data-models/common-schema.json#/definitions/EntityIdentifierType",
       "description": "Relationship. Countermeasure entity selected by the user."
+    },
+    "round": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Property. Positive integer indicating the user-interaction iteration number."
     }
   }
 }
