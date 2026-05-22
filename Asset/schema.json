@@ -43,6 +43,32 @@
       "type": "string",
       "format": "date-time",
       "description": "Property. Date and time at which the asset was registered in the Service Manager registry."
+    }, 
+    "assetComponents": {
+      "type": "array",
+      "description": "Property. Static snapshot of software, firmware, hardware, or system components associated with the asset. This information can support CTI integration and asset-level querying.",
+      "items": {
+        "type": "object",
+        "required": [],
+        "properties": {
+          "componentName": {
+            "type": "string",
+            "description": "Name of the asset component."
+          },
+          "identifierType": {
+            "type": "string",
+            "enum": [
+              "cpe",
+              "purl"
+            ],
+            "description": "Type of identifier used for the asset component. Examples include cpe and purl."
+          },
+          "identifier": {
+            "type": "string",
+            "description": "Component identifier value, for example a CPE URI or a package URL."
+          }
+        }
+      }
     }
   }
 }

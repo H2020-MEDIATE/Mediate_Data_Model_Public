@@ -1,0 +1,65 @@
+{
+  "$schema": "http://json-schema.org/schema#",
+  "title": "ComponentStatus",
+  "description": "Schema for the MEDIATE ComponentStatus heartbeat entity. This entity is periodically published by MEDIATE components to report their availability, runtime status, health state, uptime, and version. It supports integration-level monitoring and can later be used by ComDeX-based Zero Trust monitoring mechanisms.",
+  "type": "object",
+  "id": {
+    "$ref": "https://smart-data-models.github.io/data-models/common-schema.json#/definitions/EntityIdentifierType"
+  },
+  "required": [
+    "id",
+    "type",
+    "timestamp"
+  ],
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": [
+        "componentStatus"
+      ],
+      "description": "NGSI-LD entity type. It has to be componentStatus."
+    },
+    "component": {
+      "$ref": "https://smart-data-models.github.io/data-models/common-schema.json#/definitions/EntityIdentifierType",
+      "description": "Relationship. MEDIATE component whose runtime status and health state are reported by this heartbeat entity."
+    },
+    "componentType": {
+      "type": "string",
+      "description": "Property. Type or role of the MEDIATE component. Examples include DSS, POLICY_MANAGER, SERVICE_MANAGER, ORCHESTRATOR, DASHBOARD, SENTINEL, OVERWATCH, CTI, and SRDU."
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "starting",
+        "running",
+        "error",
+        "stopped"
+      ],
+      "description": "Property. Runtime status of the component."
+    },
+    "healthStatus": {
+      "type": "string",
+      "enum": [
+        "HEALTHY",
+        "DEGRADED",
+        "OFFLINE",
+        "UNKNOWN"
+      ],
+      "description": "Property. Higher-level health interpretation of the component status."
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Property. Date and time at which the component status heartbeat was generated."
+    },
+    "uptime": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Property. Number of seconds the component has been running. This field is optional."
+    },
+    "version": {
+      "type": "string",
+      "description": "Property. Version of the component publishing the heartbeat."
+    }
+  }
+}

@@ -87,6 +87,35 @@ components:
           x-ngsi:
             type: Property
 
+        assetComponents:
+          type: array
+          description: >-
+            Static snapshot of software, firmware, hardware, or system components
+            associated with the asset. This information can support CTI integration and
+            asset-level querying.
+          items:
+            type: object
+            properties:
+              componentName:
+                type: string
+                description: Name of the asset component.
+
+              identifierType:
+                type: string
+                enum:
+                  - cpe
+                  - purl
+                description: >-
+                  Type of identifier used for the asset component. Examples include cpe
+                  and purl.
+
+              identifier:
+                type: string
+                description: >-
+                  Component identifier value, for example a CPE URI or a package URL.
+          x-ngsi:
+            type: Property
+
 info:
   title: MEDIATE Asset
   version: "0.1.0"

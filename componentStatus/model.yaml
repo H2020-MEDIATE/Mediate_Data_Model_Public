@@ -1,0 +1,131 @@
+---
+components:
+  schemas:
+    ComponentStatus:
+      x-ngsi:
+        uri-prefix: "https://raw.githubusercontent.com/H2020-MEDIATE/Mediate_Data_Model_Public/main/componentStatus/schema.json"
+
+      description: >-
+        Schema for the MEDIATE ComponentStatus heartbeat entity. This entity is
+        periodically published by MEDIATE components to report their
+        availability, runtime status, health state, uptime, and version. It
+        supports integration-level monitoring and can later be used by
+        ComDeX-based Zero Trust monitoring mechanisms.
+      type: object
+
+      required:
+        - id
+        - type
+        - timestamp
+
+      properties:
+        id:
+          anyOf:
+            - description: Property. Identifier format of any NGSI entity.
+              maxLength: 256
+              minLength: 1
+              pattern: '^[\w\-\.\{\}\$\+\*\[\]`|~^@!,:\\]+$'
+              type: string
+          format: uri
+          type: string
+          description: Unique identifier of this ComponentStatus heartbeat entity.
+          x-ngsi:
+            type: Property
+
+        type:
+          type: string
+          enum:
+            - componentStatus
+          description: NGSI-LD entity type. It has to be componentStatus.
+          x-ngsi:
+            type: Property
+
+        component:
+          anyOf:
+            - description: Property. Identifier format of any NGSI entity.
+              maxLength: 256
+              minLength: 1
+              pattern: '^[\w\-\.\{\}\$\+\*\[\]`|~^@!,:\\]+$'
+              type: string
+          format: uri
+          type: string
+          description: >-
+            MEDIATE component whose runtime status and health state are reported
+            by this heartbeat entity.
+          x-ngsi:
+            type: Relationship
+
+        componentType:
+          type: string
+          description: >-
+            Type or role of the MEDIATE component. Examples include DSS,
+            POLICY_MANAGER, SERVICE_MANAGER, ORCHESTRATOR, DASHBOARD, SENTINEL,
+            OVERWATCH, CTI, and SRDU.
+          x-ngsi:
+            type: Property
+
+        status:
+          type: string
+          enum:
+            - starting
+            - running
+            - error
+            - stopped
+          description: Runtime status of the component.
+          x-ngsi:
+            type: Property
+
+        healthStatus:
+          type: string
+          enum:
+            - HEALTHY
+            - DEGRADED
+            - OFFLINE
+            - UNKNOWN
+          description: Higher-level health interpretation of the component status.
+          x-ngsi:
+            type: Property
+
+        timestamp:
+          type: string
+          format: date-time
+          description: >-
+            Date and time at which the component status heartbeat was generated.
+          x-ngsi:
+            type: Property
+
+        uptime:
+          type: integer
+          minimum: 0
+          description: >-
+            Number of seconds the component has been running. This field is
+            optional.
+          x-ngsi:
+            type: Property
+
+        version:
+          type: string
+          description: Version of the component publishing the heartbeat.
+          x-ngsi:
+            type: Property
+
+info:
+  title: MEDIATE ComponentStatus
+  version: "0.1.0"
+  description: >-
+    Data model for the MEDIATE ComponentStatus heartbeat entity, used by
+    MEDIATE components to periodically report their runtime status and health
+    information.
+
+openapi: "3.0.3"
+
+paths:
+  /ngsi-ld/v1/entities:
+    get:
+      responses:
+        "200":
+          description: OK
+          content:
+            application/ld+json:
+              schema:
+                type: object
