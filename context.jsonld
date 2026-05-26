@@ -65,6 +65,7 @@
         "evaluatedCountermeasures": "https://raw.githubusercontent.com/H2020-MEDIATE/Mediate_Data_Model_Public/main/M5policyEvaluatedCountermeasures/schema.json#evaluatedCountermeasures",
         "evaluationHistory": "https://raw.githubusercontent.com/H2020-MEDIATE/Mediate_Data_Model_Public/main/M5policyEvaluatedCountermeasures/schema.json#evaluationHistory",
         "event": "https://raw.githubusercontent.com/H2020-MEDIATE/Mediate_Data_Model_Public/main/M6userSelectedCountermeasureMessage/schema.json#event",
+        "eventAssets": "https://raw.githubusercontent.com/H2020-MEDIATE/Mediate_Data_Model_Public/main/M1DetectedEventMessage/schema.json#eventAssets",
         "eventData": "https://raw.githubusercontent.com/H2020-MEDIATE/Mediate_Data_Model_Public/main/M1DetectedEventMessage/schema.json#eventData",
         "eventId": "https://raw.githubusercontent.com/H2020-MEDIATE/Mediate_Data_Model_Public/main/M1DetectedEventMessage/schema.json#eventId",
         "eventToolType": "https://raw.githubusercontent.com/H2020-MEDIATE/Mediate_Data_Model_Public/main/M1DetectedEventMessage/schema.json#eventToolType",
