@@ -35,6 +35,8 @@ components:
           type: string
           enum:
             - geolocation-error
+            - ids-detection-error
+            - firmware-update-error
           description: >-
             NGSI-LD entity type used as the detected anomaly or attack category
             for ComDeX subscription.
