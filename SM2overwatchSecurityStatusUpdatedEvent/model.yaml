@@ -73,7 +73,7 @@ components:
           x-ngsi:
             type: Property
 
-        overwatch:
+        relatedOverwatch:
           anyOf:
             - description: Property. Identifier format of any NGSI entity.
               maxLength: 256

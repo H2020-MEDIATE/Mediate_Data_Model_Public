@@ -15,9 +15,9 @@
     "type": {
       "type": "string",
       "enum": [
-        "userSelectedCountermeasure"
+        "userCountermeasureSelection"
       ],
-      "description": "NGSI-LD entity type. It has to be userSelectedCountermeasure."
+      "description": "NGSI-LD entity type. It has to be userCountermeasureSelection."
     },
     "timestamp": {
       "type": "string",

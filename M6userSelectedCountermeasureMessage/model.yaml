@@ -34,8 +34,8 @@ components:
         type:
           type: string
           enum:
-            - userSelectedCountermeasure
-          description: NGSI-LD entity type. It has to be userSelectedCountermeasure.
+            - userCountermeasureSelection
+          description: NGSI-LD entity type. It has to be userCountermeasureSelection.
           x-ngsi:
             type: Property
 

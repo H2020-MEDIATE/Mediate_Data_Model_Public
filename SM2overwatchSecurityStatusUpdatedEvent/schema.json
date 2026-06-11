@@ -39,7 +39,7 @@
       "format": "date-time",
       "description": "Property. Date and time at which the security status update event was generated."
     },
-    "overwatch": {
+    "relatedOverwatch": {
       "$ref": "https://smart-data-models.github.io/data-models/common-schema.json#/definitions/EntityIdentifierType",
       "description": "Relationship. Overwatch entity whose security status is summarized by this event."
     },

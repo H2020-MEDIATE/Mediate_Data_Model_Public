@@ -1,7 +1,7 @@
 {
   "$schema": "http://json-schema.org/schema#",
   "title": "M1DetectedEventMessage",
-  "description": "Schema for MEDIATE Message M1 emitted by a Sentinel when an anomaly, attack, or abnormal event is detected. The NGSI-LD entity type is used by ComDeX for type-based subscription.",
+  "description": "Schema for MEDIATE Message M1 emitted by a Sentinel when an anomaly, attack, or abnormal event is detected. The NGSI-LD entity type is used by ComDeX for type-based subscription. Multi-typing is supported per ETSI GS CIM 009 v1.5.1 and later: an entity may carry one type (string) or several types (array).",
   "type": "object",
   "id": {
     "$ref": "https://smart-data-models.github.io/data-models/common-schema.json#/definitions/EntityIdentifierType"
@@ -13,13 +13,30 @@
   ],
   "properties": {
     "type": {
-      "type": "string",
-      "enum": [
-        "geolocation-error",
-        "ids-detection-error", 
-        "firmware-update-error"
-      ],
-      "description": "NGSI-LD entity type used as the detected anomaly or attack category for ComDeX subscription."
+      "description": "NGSI-LD entity type(s) used as the detected anomaly or attack category for ComDeX subscription. Either a single type (string) or multiple types (array of strings) per NGSI-LD multi-typing (ETSI GS CIM 009 >= v1.5.1).",
+      "oneOf": [
+        {
+          "type": "string",
+          "enum": [
+            "geolocation-error",
+            "ids-detection-error",
+            "firmware-update-error"
+          ]
+        },
+        {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "enum": [
+              "geolocation-error",
+              "ids-detection-error",
+              "firmware-update-error"
+            ]
+          }
+        }
+      ]
     },
     "timestamp": {
       "type": "string",

@@ -28,7 +28,7 @@
       "type": "string",
       "description": "Property. Component that generated the heartbeat message."
     },
-    "sentinel": {
+    "relatedSentinel": {
       "$ref": "https://smart-data-models.github.io/data-models/common-schema.json#/definitions/EntityIdentifierType",
       "description": "Relationship. Sentinel entity that generated the heartbeat."
     },

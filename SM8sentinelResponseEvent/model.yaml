@@ -69,7 +69,7 @@ components:
           x-ngsi:
             type: Property
 
-        sentinel:
+        relatedSentinel:
           anyOf:
             - description: Property. Identifier format of any NGSI entity.
               maxLength: 256

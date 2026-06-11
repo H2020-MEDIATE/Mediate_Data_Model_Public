@@ -28,11 +28,11 @@
       "type": "string",
       "description": "Property. Component that generated the message."
     },
-    "sentinel": {
+    "relatedSentinel": {
       "$ref": "https://smart-data-models.github.io/data-models/common-schema.json#/definitions/EntityIdentifierType",
       "description": "Relationship. Sentinel entity that reports the reconfiguration status."
     },
-    "overwatch": {
+    "relatedOverwatch": {
       "$ref": "https://smart-data-models.github.io/data-models/common-schema.json#/definitions/EntityIdentifierType",
       "description": "Relationship. Overwatch entity associated with the reporting Sentinel."
     },

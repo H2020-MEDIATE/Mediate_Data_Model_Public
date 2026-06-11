@@ -39,7 +39,7 @@
       "format": "date-time",
       "description": "Property. Date and time at which the Sentinel response event was generated."
     },
-    "sentinel": {
+    "relatedSentinel": {
       "$ref": "https://smart-data-models.github.io/data-models/common-schema.json#/definitions/EntityIdentifierType",
       "description": "Relationship. Sentinel entity returned by the Service Manager."
     }
