@@ -3,7 +3,7 @@ components:
   schemas:
     UserSelectedCountermeasure:
       x-ngsi:
-        uri-prefix: "https://raw.githubusercontent.com/H2020-MEDIATE/Mediate_Data_Model_Public/main/M6userSelectedCountermeasureMessage/schema.json"
+        uri-prefix: "https://raw.githubusercontent.com/H2020-MEDIATE/Mediate_Data_Model_Public/main/M6userCountermeasureSelectionMessage/schema.json"
 
       description: >-
         Schema for MEDIATE Message M6. This message publishes the countermeasure
