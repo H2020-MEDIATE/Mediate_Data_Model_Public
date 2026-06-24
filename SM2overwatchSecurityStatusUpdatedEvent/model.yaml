@@ -1,4 +1,3 @@
----
 components:
   schemas:
     OverwatchSecurityStatusUpdatedEvent:
@@ -13,18 +12,18 @@ components:
       type: object
 
       required:
-        - id
-        - type
-        - timestamp
+      - id
+      - type
+      - timestamp
 
       properties:
         id:
           anyOf:
-            - description: Property. Identifier format of any NGSI entity.
-              maxLength: 256
-              minLength: 1
-              pattern: '^[\w\-\.\{\}\$\+\*\[\]`|~^@!,:\\]+$'
-              type: string
+          - description: Property. Identifier format of any NGSI entity.
+            maxLength: 256
+            minLength: 1
+            pattern: '^[\w\-\.\{\}\$\+\*\[\]`|~^@!,:\\]+$'
+            type: string
           format: uri
           type: string
           description: Unique identifier of this Overwatch security status update event.
@@ -35,7 +34,7 @@ components:
         type:
           type: string
           enum:
-            - overwatchSecurityStatusUpdatedEvent
+          - overwatchSecurityStatusUpdatedEvent
           description: >-
             NGSI-LD entity type. It has to be
             overwatchSecurityStatusUpdatedEvent.
@@ -45,25 +44,23 @@ components:
         originator:
           type: string
           enum:
-            - SERVICE_MANAGER
+          - SERVICE_MANAGER
           description: Component that generated the event.
           x-ngsi:
             type: Property
 
-        messageId:
+        relatedDetectedEventMessage:
+          anyOf:
+          - description: Property. Identifier format of any NGSI entity.
+            maxLength: 256
+            minLength: 1
+            pattern: ^[\w\-\.\{\}\$\+\*\[\]`|~^@!,:\\]+$
+            type: string
+          format: uri
           type: string
-          description: Unique identifier of this published message.
+          description: Reference to the triggering M1 Detected Event Message entity id.
           x-ngsi:
-            type: Property
-
-        correlationId:
-          type: string
-          description: >-
-            Identifier used to correlate this event with the anomaly detection
-            or security-status update flow.
-          x-ngsi:
-            type: Property
-
+            type: Relationship
         timestamp:
           type: string
           format: date-time
@@ -75,11 +72,11 @@ components:
 
         relatedOverwatch:
           anyOf:
-            - description: Property. Identifier format of any NGSI entity.
-              maxLength: 256
-              minLength: 1
-              pattern: '^[\w\-\.\{\}\$\+\*\[\]`|~^@!,:\\]+$'
-              type: string
+          - description: Property. Identifier format of any NGSI entity.
+            maxLength: 256
+            minLength: 1
+            pattern: '^[\w\-\.\{\}\$\+\*\[\]`|~^@!,:\\]+$'
+            type: string
           format: uri
           type: string
           description: >-

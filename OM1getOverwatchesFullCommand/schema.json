@@ -26,14 +26,6 @@
       ],
       "description": "Property. Component that generated the command."
     },
-    "messageId": {
-      "type": "string",
-      "description": "Property. Unique identifier of this command message."
-    },
-    "correlationId": {
-      "type": "string",
-      "description": "Property. Identifier used to correlate this command with the corresponding response event."
-    },
     "timestamp": {
       "type": "string",
       "format": "date-time",

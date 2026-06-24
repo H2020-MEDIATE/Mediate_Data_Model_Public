@@ -1,4 +1,3 @@
----
 components:
   schemas:
     Sentinel:
@@ -14,17 +13,17 @@ components:
       type: object
 
       required:
-        - id
-        - type
+      - id
+      - type
 
       properties:
         id:
           anyOf:
-            - description: Property. Identifier format of any NGSI entity.
-              maxLength: 256
-              minLength: 1
-              pattern: '^[\w\-\.\{\}\$\+\*\[\]`|~^@!,:\\]+$'
-              type: string
+          - description: Property. Identifier format of any NGSI entity.
+            maxLength: 256
+            minLength: 1
+            pattern: '^[\w\-\.\{\}\$\+\*\[\]`|~^@!,:\\]+$'
+            type: string
           format: uri
           type: string
           description: Unique identifier of this Sentinel entity.
@@ -35,30 +34,52 @@ components:
         type:
           type: string
           enum:
-            - sentinel
+          - sentinel
           description: NGSI-LD entity type. It has to be sentinel.
           x-ngsi:
             type: Property
 
+        sentinelType:
+          type: string
+          enum:
+          - data-sentinel
+          - software-sentinel
+          - network-sentinel
+          description: Category of the Sentinel. Standardized MVP enumeration shared with M1.
+          x-ngsi:
+            type: Property
         operationalStatus:
           type: string
           enum:
-            - OPERATIONAL
-            - RECONFIGURING
-            - INITIALIZING
-            - STOPPED
-            - FAILED
+          - OPERATIONAL
+          - RECONFIGURING
+          - INITIALIZING
+          - STOPPED
+          - FAILED
           description: Current operational status of the Sentinel.
           x-ngsi:
             type: Property
 
-        threatStatus:
+        healthStatus:
           type: string
-          description: >-
-            Current threat status of the Sentinel. Example: UNDER_THREAT.
+          enum:
+          - HEALTHY
+          - DEGRADED
+          - OFFLINE
+          description: Health status of the Sentinel, acquired from M12 heartbeat messages.
           x-ngsi:
             type: Property
-
+        securityStatus:
+          type: string
+          description: 'Current security status of the Sentinel, derived by the Service Manager from the severityVector. Example: GREEN, AMBER, RED.'
+          x-ngsi:
+            type: Property
+        activeAlertsCount:
+          type: integer
+          minimum: 0
+          description: Number of currently active alerts associated with the Sentinel.
+          x-ngsi:
+            type: Property
         lastHeartbeat:
           type: string
           format: date-time
@@ -69,11 +90,11 @@ components:
 
         relatedOverwatch:
           anyOf:
-            - description: Property. Identifier format of any NGSI entity.
-              maxLength: 256
-              minLength: 1
-              pattern: '^[\w\-\.\{\}\$\+\*\[\]`|~^@!,:\\]+$'
-              type: string
+          - description: Property. Identifier format of any NGSI entity.
+            maxLength: 256
+            minLength: 1
+            pattern: '^[\w\-\.\{\}\$\+\*\[\]`|~^@!,:\\]+$'
+            type: string
           format: uri
           type: string
           description: Overwatch entity associated with the Sentinel.
@@ -86,11 +107,11 @@ components:
             List of Asset entities managed or monitored by the Sentinel.
           items:
             anyOf:
-              - description: Property. Identifier format of any NGSI entity.
-                maxLength: 256
-                minLength: 1
-                pattern: '^[\w\-\.\{\}\$\+\*\[\]`|~^@!,:\\]+$'
-                type: string
+            - description: Property. Identifier format of any NGSI entity.
+              maxLength: 256
+              minLength: 1
+              pattern: '^[\w\-\.\{\}\$\+\*\[\]`|~^@!,:\\]+$'
+              type: string
             format: uri
             type: string
           x-ngsi:

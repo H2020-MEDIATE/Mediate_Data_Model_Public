@@ -1,4 +1,3 @@
----
 components:
   schemas:
     GetAssetCommand:
@@ -12,18 +11,18 @@ components:
       type: object
 
       required:
-        - id
-        - type
-        - timestamp
+      - id
+      - type
+      - timestamp
 
       properties:
         id:
           anyOf:
-            - description: Property. Identifier format of any NGSI entity.
-              maxLength: 256
-              minLength: 1
-              pattern: '^[\w\-\.\{\}\$\+\*\[\]`|~^@!,:\\]+$'
-              type: string
+          - description: Property. Identifier format of any NGSI entity.
+            maxLength: 256
+            minLength: 1
+            pattern: '^[\w\-\.\{\}\$\+\*\[\]`|~^@!,:\\]+$'
+            type: string
           format: uri
           type: string
           description: Unique identifier of this Get Asset command.
@@ -34,7 +33,7 @@ components:
         type:
           type: string
           enum:
-            - getAssetCommand
+          - getAssetCommand
           description: NGSI-LD entity type. It has to be getAssetCommand.
           x-ngsi:
             type: Property
@@ -42,22 +41,8 @@ components:
         originator:
           type: string
           enum:
-            - ORCHESTRATOR
+          - ORCHESTRATOR
           description: Component that generated the command.
-          x-ngsi:
-            type: Property
-
-        messageId:
-          type: string
-          description: Unique identifier of this command message.
-          x-ngsi:
-            type: Property
-
-        correlationId:
-          type: string
-          description: >-
-            Identifier used to correlate this command with the corresponding
-            AssetResponseEvent.
           x-ngsi:
             type: Property
 
@@ -70,11 +55,11 @@ components:
 
         assetId:
           anyOf:
-            - description: Property. Identifier format of any NGSI entity.
-              maxLength: 256
-              minLength: 1
-              pattern: '^[\w\-\.\{\}\$\+\*\[\]`|~^@!,:\\]+$'
-              type: string
+          - description: Property. Identifier format of any NGSI entity.
+            maxLength: 256
+            minLength: 1
+            pattern: '^[\w\-\.\{\}\$\+\*\[\]`|~^@!,:\\]+$'
+            type: string
           format: uri
           type: string
           description: Asset entity requested by the Orchestrator.

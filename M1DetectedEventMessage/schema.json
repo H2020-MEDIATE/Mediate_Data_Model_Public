@@ -60,7 +60,12 @@
     },
     "sentinelType": {
       "type": "string",
-      "description": "Property. Type/category of the Sentinel, for example hardware, software, edge, or cloud."
+      "enum": [
+        "data-sentinel",
+        "software-sentinel",
+        "network-sentinel"
+      ],
+      "description": "Property. Category of the Sentinel that produced the detection. Standardized MVP enumeration shared with the Sentinel entity."
     },
     "eventData": {
       "description": "Property. Raw or structured data describing the detected event.",

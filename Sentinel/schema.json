@@ -1,7 +1,7 @@
 {
   "$schema": "http://json-schema.org/schema#",
   "title": "Sentinel",
-  "description": "Schema for the MEDIATE Sentinel entity. A Sentinel represents a monitored or managed component registered in the Service Manager registry. It includes operational status, threat status, heartbeat information, its related Overwatch, managed Assets, reconfiguration status, configuration version, and registration timestamp.",
+  "description": "Schema for the MEDIATE Sentinel entity. A Sentinel represents a monitored or managed component registered in the Service Manager registry. It includes its sentinel type, operational status, health status and security status, heartbeat information, active alerts count, its related Overwatch, managed Assets, reconfiguration status, configuration version, and registration timestamp.",
   "type": "object",
   "id": {
     "$ref": "https://smart-data-models.github.io/data-models/common-schema.json#/definitions/EntityIdentifierType"
@@ -18,6 +18,15 @@
       ],
       "description": "NGSI-LD entity type. It has to be sentinel."
     },
+    "sentinelType": {
+      "type": "string",
+      "enum": [
+        "data-sentinel",
+        "software-sentinel",
+        "network-sentinel"
+      ],
+      "description": "Property. Category of the Sentinel. Standardized MVP enumeration shared with M1."
+    },
     "operationalStatus": {
       "type": "string",
       "enum": [
@@ -29,9 +38,18 @@
       ],
       "description": "Property. Current operational status of the Sentinel."
     },
-    "threatStatus": {
+    "healthStatus": {
       "type": "string",
-      "description": "Property. Current threat status of the Sentinel. Example: UNDER_THREAT."
+      "enum": [
+        "HEALTHY",
+        "DEGRADED",
+        "OFFLINE"
+      ],
+      "description": "Property. Health status of the Sentinel, acquired from M12 heartbeat messages."
+    },
+    "securityStatus": {
+      "type": "string",
+      "description": "Property. Current security status of the Sentinel, derived by the Service Manager from the severityVector. Example: GREEN, AMBER, RED."
     },
     "lastHeartbeat": {
       "type": "string",
@@ -61,6 +79,11 @@
       "type": "string",
       "format": "date-time",
       "description": "Property. Date and time at which the Sentinel was registered in the Service Manager registry."
+    },
+    "activeAlertsCount": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Property. Number of currently active alerts associated with the Sentinel."
     }
   }
 }

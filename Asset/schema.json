@@ -1,7 +1,7 @@
 {
   "$schema": "http://json-schema.org/schema#",
   "title": "Asset",
-  "description": "Schema for the MEDIATE Asset entity. An Asset represents a protected or monitored system component registered in the Service Manager registry. It includes asset type, operational status, risk level, associated Sentinel, last assessment timestamp, and registration timestamp.",
+  "description": "Schema for the MEDIATE Asset entity. An Asset represents a protected or monitored system component registered in the Service Manager registry. It includes asset type, an underAlert flag, associated Sentinel, last assessment timestamp, registration timestamp, and asset components.",
   "type": "object",
   "id": {
     "$ref": "https://smart-data-models.github.io/data-models/common-schema.json#/definitions/EntityIdentifierType"
@@ -22,13 +22,9 @@
       "type": "string",
       "description": "Property. Type or category of the protected asset."
     },
-    "operationalStatus": {
-      "type": "string",
-      "description": "Property. Current operational status of the asset."
-    },
-    "riskLevel": {
-      "type": "string",
-      "description": "Property. Current risk level associated with the asset."
+    "underAlert": {
+      "type": "boolean",
+      "description": "Property. Flag indicating whether the asset is currently under alert. Replaces the previously used operationalStatus and riskLevel, which could not be derived from the current data model."
     },
     "associatedSentinel": {
       "$ref": "https://smart-data-models.github.io/data-models/common-schema.json#/definitions/EntityIdentifierType",
@@ -43,7 +39,7 @@
       "type": "string",
       "format": "date-time",
       "description": "Property. Date and time at which the asset was registered in the Service Manager registry."
-    }, 
+    },
     "assetComponents": {
       "type": "array",
       "description": "Property. Static snapshot of software, firmware, hardware, or system components associated with the asset. This information can support CTI integration and asset-level querying.",

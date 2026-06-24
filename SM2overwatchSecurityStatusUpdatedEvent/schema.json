@@ -26,13 +26,9 @@
       ],
       "description": "Property. Component that generated the event."
     },
-    "messageId": {
-      "type": "string",
-      "description": "Property. Unique identifier of this published message."
-    },
-    "correlationId": {
-      "type": "string",
-      "description": "Property. Identifier used to correlate this event with the anomaly detection or security-status update flow."
+    "relatedDetectedEventMessage": {
+      "$ref": "https://smart-data-models.github.io/data-models/common-schema.json#/definitions/EntityIdentifierType",
+      "description": "Relationship. Reference to the triggering M1 Detected Event Message entity id."
     },
     "timestamp": {
       "type": "string",

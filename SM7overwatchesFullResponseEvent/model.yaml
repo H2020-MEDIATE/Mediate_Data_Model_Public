@@ -1,4 +1,3 @@
----
 components:
   schemas:
     OverwatchesFullResponseEvent:
@@ -12,18 +11,18 @@ components:
       type: object
 
       required:
-        - id
-        - type
-        - timestamp
+      - id
+      - type
+      - timestamp
 
       properties:
         id:
           anyOf:
-            - description: Property. Identifier format of any NGSI entity.
-              maxLength: 256
-              minLength: 1
-              pattern: '^[\w\-\.\{\}\$\+\*\[\]`|~^@!,:\\]+$'
-              type: string
+          - description: Property. Identifier format of any NGSI entity.
+            maxLength: 256
+            minLength: 1
+            pattern: '^[\w\-\.\{\}\$\+\*\[\]`|~^@!,:\\]+$'
+            type: string
           format: uri
           type: string
           description: Unique identifier of this Overwatches Full response event.
@@ -34,7 +33,7 @@ components:
         type:
           type: string
           enum:
-            - overwatchesFullResponseEvent
+          - overwatchesFullResponseEvent
           description: >-
             NGSI-LD entity type. It has to be
             overwatchesFullResponseEvent.
@@ -44,25 +43,23 @@ components:
         originator:
           type: string
           enum:
-            - SERVICE_MANAGER
+          - SERVICE_MANAGER
           description: Component that generated the response event.
           x-ngsi:
             type: Property
 
-        messageId:
+        relatedGetOverwatchesFullCommand:
+          anyOf:
+          - description: Property. Identifier format of any NGSI entity.
+            maxLength: 256
+            minLength: 1
+            pattern: ^[\w\-\.\{\}\$\+\*\[\]`|~^@!,:\\]+$
+            type: string
+          format: uri
           type: string
-          description: Unique identifier of this response message.
+          description: Reference to the triggering OM1 GetOverwatchesFullCommand entity id.
           x-ngsi:
-            type: Property
-
-        correlationId:
-          type: string
-          description: >-
-            Identifier used to correlate this response event with the
-            corresponding GetOverwatchesFullCommand.
-          x-ngsi:
-            type: Property
-
+            type: Relationship
         timestamp:
           type: string
           format: date-time
@@ -77,11 +74,11 @@ components:
             Manager.
           items:
             anyOf:
-              - description: Property. Identifier format of any NGSI entity.
-                maxLength: 256
-                minLength: 1
-                pattern: '^[\w\-\.\{\}\$\+\*\[\]`|~^@!,:\\]+$'
-                type: string
+            - description: Property. Identifier format of any NGSI entity.
+              maxLength: 256
+              minLength: 1
+              pattern: '^[\w\-\.\{\}\$\+\*\[\]`|~^@!,:\\]+$'
+              type: string
             format: uri
             type: string
           x-ngsi:

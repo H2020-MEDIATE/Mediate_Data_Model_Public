@@ -1,4 +1,3 @@
----
 components:
   schemas:
     GetOverwatchesFullCommand:
@@ -12,18 +11,18 @@ components:
       type: object
 
       required:
-        - id
-        - type
-        - timestamp
+      - id
+      - type
+      - timestamp
 
       properties:
         id:
           anyOf:
-            - description: Property. Identifier format of any NGSI entity.
-              maxLength: 256
-              minLength: 1
-              pattern: '^[\w\-\.\{\}\$\+\*\[\]`|~^@!,:\\]+$'
-              type: string
+          - description: Property. Identifier format of any NGSI entity.
+            maxLength: 256
+            minLength: 1
+            pattern: '^[\w\-\.\{\}\$\+\*\[\]`|~^@!,:\\]+$'
+            type: string
           format: uri
           type: string
           description: Unique identifier of this Get Overwatches Full command.
@@ -34,7 +33,7 @@ components:
         type:
           type: string
           enum:
-            - getOverwatchesFullCommand
+          - getOverwatchesFullCommand
           description: >-
             NGSI-LD entity type. It has to be getOverwatchesFullCommand.
           x-ngsi:
@@ -43,22 +42,8 @@ components:
         originator:
           type: string
           enum:
-            - ORCHESTRATOR
+          - ORCHESTRATOR
           description: Component that generated the command.
-          x-ngsi:
-            type: Property
-
-        messageId:
-          type: string
-          description: Unique identifier of this command message.
-          x-ngsi:
-            type: Property
-
-        correlationId:
-          type: string
-          description: >-
-            Identifier used to correlate this command with the corresponding
-            response event.
           x-ngsi:
             type: Property
 

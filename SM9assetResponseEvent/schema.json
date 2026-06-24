@@ -26,13 +26,9 @@
       ],
       "description": "Property. Component that generated the response event."
     },
-    "messageId": {
-      "type": "string",
-      "description": "Property. Unique identifier of this response message."
-    },
-    "correlationId": {
-      "type": "string",
-      "description": "Property. Identifier used to correlate this response event with the corresponding GetAssetCommand."
+    "relatedGetAssetCommand": {
+      "$ref": "https://smart-data-models.github.io/data-models/common-schema.json#/definitions/EntityIdentifierType",
+      "description": "Relationship. Reference to the triggering OM3 GetAssetCommand entity id."
     },
     "timestamp": {
       "type": "string",

@@ -15,9 +15,9 @@
     "type": {
       "type": "string",
       "enum": [
-        "sentinelReconfigurationStatusMessage"
+        "sentinelReconfigurationStatus"
       ],
-      "description": "NGSI-LD entity type. It has to be sentinelReconfigurationStatusMessage."
+      "description": "NGSI-LD entity type. It has to be sentinelReconfigurationStatus."
     },
     "timestamp": {
       "type": "string",
@@ -99,9 +99,9 @@
       ],
       "description": "Property. Sentinel health state after the reconfiguration."
     },
-    "correlationId": {
-      "type": "string",
-      "description": "Property. Identifier used to correlate this status message with the corresponding reconfiguration execution flow."
+    "relatedSentinelReconfigurationCommand": {
+      "$ref": "https://smart-data-models.github.io/data-models/common-schema.json#/definitions/EntityIdentifierType",
+      "description": "Relationship. Reference to the triggering M10 SentinelReconfigurationCommand entity id."
     }
   }
 }

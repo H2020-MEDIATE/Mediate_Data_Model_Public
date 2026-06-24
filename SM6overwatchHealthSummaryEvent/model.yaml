@@ -1,9 +1,8 @@
----
 components:
   schemas:
-    FleetHealthSummaryEvent:
+    OverwatchHealthSummaryEvent:
       x-ngsi:
-        uri-prefix: "https://raw.githubusercontent.com/H2020-MEDIATE/Mediate_Data_Model_Public/main/SM6fleetHealthSummaryEvent/schema.json"
+        uri-prefix: "https://raw.githubusercontent.com/H2020-MEDIATE/Mediate_Data_Model_Public/main/SM6overwatchHealthSummaryEvent/schema.json"
 
       description: >-
         Schema for Service Manager message SM6. This event publishes an
@@ -12,18 +11,18 @@ components:
       type: object
 
       required:
-        - id
-        - type
-        - timestamp
+      - id
+      - type
+      - timestamp
 
       properties:
         id:
           anyOf:
-            - description: Property. Identifier format of any NGSI entity.
-              maxLength: 256
-              minLength: 1
-              pattern: '^[\w\-\.\{\}\$\+\*\[\]`|~^@!,:\\]+$'
-              type: string
+          - description: Property. Identifier format of any NGSI entity.
+            maxLength: 256
+            minLength: 1
+            pattern: '^[\w\-\.\{\}\$\+\*\[\]`|~^@!,:\\]+$'
+            type: string
           format: uri
           type: string
           description: Unique identifier of this fleet health summary event.
@@ -34,34 +33,32 @@ components:
         type:
           type: string
           enum:
-            - fleetHealthSummaryEvent
+          - overwatchHealthSummaryEvent
           description: >-
-            NGSI-LD entity type. It has to be fleetHealthSummaryEvent.
+            NGSI-LD entity type. It has to be overwatchHealthSummaryEvent.
           x-ngsi:
             type: Property
 
         originator:
           type: string
           enum:
-            - SERVICE_MANAGER
+          - SERVICE_MANAGER
           description: Component that generated the event.
           x-ngsi:
             type: Property
 
-        messageId:
+        relatedSentinelHeartbeat:
+          anyOf:
+          - description: Property. Identifier format of any NGSI entity.
+            maxLength: 256
+            minLength: 1
+            pattern: ^[\w\-\.\{\}\$\+\*\[\]`|~^@!,:\\]+$
+            type: string
+          format: uri
           type: string
-          description: Unique identifier of this published message.
+          description: Reference to the M12 Sentinel Heartbeat message entity id that triggered this health summary update.
           x-ngsi:
-            type: Property
-
-        correlationId:
-          type: string
-          description: >-
-            Identifier used to correlate this event with the continuous
-            health-monitoring flow.
-          x-ngsi:
-            type: Property
-
+            type: Relationship
         timestamp:
           type: string
           format: date-time
