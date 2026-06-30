@@ -69,16 +69,6 @@ components:
               x-ngsi:
                 type: Relationship
 
-            sentinelType:
-              type: string
-              enum:
-                - sentinel-hardware
-                - sentinel-edge
-                - sentinel-cloud
-              description: Type/category of the target Sentinel.
-              x-ngsi:
-                type: Property
-
             ipAddress:
               type: string
               description: IP address of the target Sentinel.
@@ -119,6 +109,45 @@ components:
                 - regular
                 - low
               description: Priority of the reconfiguration command.
+
+            bitstream:
+              type: object
+              description: >-
+                Embedded reconfiguration bitstream payload and its metadata,
+                used when the bitstream is transferred as a text-encoded
+                payload inside the message instead of being resolved locally
+                by the Sentinel from configurationId.
+              properties:
+                encoding:
+                  type: string
+                  description: >-
+                    Encoding scheme used for the bitstream payload. Example:
+                    base64.
+
+                contentType:
+                  type: string
+                  description: >-
+                    MIME type of the bitstream payload. Example:
+                    application/octet-stream.
+
+                fileName:
+                  type: string
+                  description: Original file name of the bitstream.
+
+                checksum:
+                  type: string
+                  description: >-
+                    Checksum of the bitstream payload, used to verify
+                    integrity after transfer.
+
+                sizeBytes:
+                  type: integer
+                  minimum: 0
+                  description: Size of the decoded bitstream payload, in bytes.
+
+                value:
+                  type: string
+                  description: Encoded bitstream payload content.
 
           x-ngsi:
             type: Property

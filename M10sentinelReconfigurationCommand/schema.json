@@ -31,15 +31,6 @@
           "$ref": "https://smart-data-models.github.io/data-models/common-schema.json#/definitions/EntityIdentifierType",
           "description": "Relationship target. Identifier of the target Sentinel entity."
         },
-        "sentinelType": {
-          "type": "string",
-          "enum": [
-            "sentinel-hardware",
-            "sentinel-edge",
-            "sentinel-cloud"
-          ],
-          "description": "Property. Type/category of the target Sentinel."
-        },
         "ipAddress": {
           "type": "string",
           "description": "Property. IP address of the target Sentinel."
@@ -74,6 +65,37 @@
             "low"
           ],
           "description": "Priority of the reconfiguration command."
+        },
+        "bitstream": {
+          "type": "object",
+          "description": "Embedded reconfiguration bitstream payload and its metadata, used when the bitstream is transferred as a text-encoded payload inside the message instead of being resolved locally by the Sentinel from configurationId.",
+          "properties": {
+            "encoding": {
+              "type": "string",
+              "description": "Encoding scheme used for the bitstream payload. Example: base64."
+            },
+            "contentType": {
+              "type": "string",
+              "description": "MIME type of the bitstream payload. Example: application/octet-stream."
+            },
+            "fileName": {
+              "type": "string",
+              "description": "Original file name of the bitstream."
+            },
+            "checksum": {
+              "type": "string",
+              "description": "Checksum of the bitstream payload, used to verify integrity after transfer."
+            },
+            "sizeBytes": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "Size of the decoded bitstream payload, in bytes."
+            },
+            "value": {
+              "type": "string",
+              "description": "Encoded bitstream payload content."
+            }
+          }
         }
       }
     },

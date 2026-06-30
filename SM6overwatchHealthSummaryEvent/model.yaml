@@ -6,7 +6,7 @@ components:
 
       description: >-
         Schema for Service Manager message SM6. This event publishes an
-        aggregate fleet health summary after the Service Manager processes
+        aggregate Overwatch health summary after the Service Manager processes
         Sentinel heartbeat information and updates its registry.
       type: object
 
@@ -25,7 +25,7 @@ components:
             type: string
           format: uri
           type: string
-          description: Unique identifier of this fleet health summary event.
+          description: Unique identifier of this Overwatch health summary event.
           x-ngsi:
             type: Property
 
@@ -63,14 +63,14 @@ components:
           type: string
           format: date-time
           description: >-
-            Date and time at which the fleet health summary event was generated.
+            Date and time at which the Overwatch health summary event was generated.
           x-ngsi:
             type: Property
 
         totalSentinels:
           type: integer
           minimum: 0
-          description: Total number of Sentinels registered in the fleet.
+          description: Total number of Sentinels registered in the Service Manager registry.
           x-ngsi:
             type: Property
 
@@ -99,17 +99,17 @@ components:
           type: string
           format: date-time
           description: >-
-            Date and time at which the fleet health summary was last updated in
+            Date and time at which the Overwatch health summary was last updated in
             the Service Manager registry.
           x-ngsi:
             type: Property
 
 info:
-  title: MEDIATE SM6 Fleet Health Summary Event
+  title: MEDIATE SM6 Overwatch Health Summary Event
   version: "0.1.0"
   description: >-
     Data model for Service Manager message SM6, used to publish an aggregate
-    fleet health summary to the Orchestrator and Dashboard.
+    Overwatch health summary to the Orchestrator and Dashboard.
 
 openapi: "3.0.3"
 

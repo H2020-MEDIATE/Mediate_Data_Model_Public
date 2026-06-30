@@ -13,6 +13,7 @@
         "authentication": "https://raw.githubusercontent.com/H2020-MEDIATE/Mediate_Data_Model_Public/main/M10sentinelReconfigurationCommand/schema.json#authentication",
         "automaticSelection": "https://raw.githubusercontent.com/H2020-MEDIATE/Mediate_Data_Model_Public/main/M7policyCountermeasureDecision/schema.json#automaticSelection",
         "available": "https://raw.githubusercontent.com/H2020-MEDIATE/Mediate_Data_Model_Public/main/M5policyEvaluatedCountermeasures/schema.json#available",
+        "bitstream": "https://raw.githubusercontent.com/H2020-MEDIATE/Mediate_Data_Model_Public/main/M10sentinelReconfigurationCommand/schema.json#bitstream",
         "checksum": "https://raw.githubusercontent.com/H2020-MEDIATE/Mediate_Data_Model_Public/main/M9predefinedSentinelConfiguration/schema.json#checksum",
         "commentDetails": "https://raw.githubusercontent.com/H2020-MEDIATE/Mediate_Data_Model_Public/main/M1DetectedEventMessage/schema.json#commentDetails",
         "component": "https://raw.githubusercontent.com/H2020-MEDIATE/Mediate_Data_Model_Public/main/componentStatus/schema.json#component",
