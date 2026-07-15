@@ -14,9 +14,7 @@
   "properties": {
     "type": {
       "type": "string",
-      "enum": [
-        "sentinelReconfigurationStatus"
-      ],
+      "enum": ["sentinelReconfigurationStatus"],
       "description": "NGSI-LD entity type. It has to be sentinelReconfigurationStatus."
     },
     "timestamp": {
@@ -43,13 +41,35 @@
         "configurationId": {
           "type": "array",
           "description": "List of configuration identifiers applied during the reconfiguration.",
-          "items": {
-            "type": "string"
-          }
+          "items": { "type": "string" }
         },
         "version": {
           "type": "string",
           "description": "Version of the applied deployment configuration."
+        },
+        "priority": {
+          "type": "string",
+          "enum": ["regular", "urgent"],
+          "description": "Execution priority of the deployment. Values: regular, urgent."
+        },
+        "bitstream": {
+          "type": "object",
+          "description": "Binary payload metadata associated with the deployment.",
+          "properties": {
+            "fileName": {
+              "type": "string",
+              "description": "Name of the bitstream binary file."
+            },
+            "checksum": {
+              "type": "string",
+              "description": "Integrity checksum of the bitstream binary file."
+            },
+            "sizeBytes": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "Size of the bitstream binary file in bytes."
+            }
+          }
         }
       }
     },
@@ -59,20 +79,12 @@
       "properties": {
         "state": {
           "type": "string",
-          "enum": [
-            "pending",
-            "inProgress",
-            "completed",
-            "failed"
-          ],
+          "enum": ["pending", "inProgress", "completed", "failed"],
           "description": "Current execution state of the reconfiguration."
         },
         "result": {
           "type": "string",
-          "enum": [
-            "success",
-            "fail"
-          ],
+          "enum": ["success", "fail"],
           "description": "Execution result of the reconfiguration."
         },
         "details": {
@@ -83,20 +95,12 @@
     },
     "previousState": {
       "type": "string",
-      "enum": [
-        "healthy",
-        "degraded",
-        "offline"
-      ],
+      "enum": ["healthy", "degraded", "offline"],
       "description": "Property. Sentinel health state before the reconfiguration."
     },
     "currentState": {
       "type": "string",
-      "enum": [
-        "healthy",
-        "degraded",
-        "offline"
-      ],
+      "enum": ["healthy", "degraded", "offline"],
       "description": "Property. Sentinel health state after the reconfiguration."
     },
     "relatedSentinelReconfigurationCommand": {

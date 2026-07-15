@@ -1,3 +1,4 @@
+---
 components:
   schemas:
     SentinelReconfigurationStatusMessage:
@@ -12,40 +13,36 @@ components:
       type: object
 
       required:
-      - id
-      - type
-      - timestamp
+        - id
+        - type
+        - timestamp
 
       properties:
         id:
           anyOf:
-          - description: Property. Identifier format of any NGSI entity.
-            maxLength: 256
-            minLength: 1
-            pattern: '^[\w\-\.\{\}\$\+\*\[\]`|~^@!,:\\]+$'
-            type: string
+            - description: Property. Identifier format of any NGSI entity.
+              maxLength: 256
+              minLength: 1
+              pattern: ^[\w\-\.\{\}\$\+\*\[\]`|~^@!,:\\]+$
+              type: string
           format: uri
           type: string
-          description: Unique identifier of this Sentinel reconfiguration status message.
+          description: Unique identifier of the M11 Sentinel reconfiguration status message.
           x-ngsi:
             type: Property
-
 
         type:
           type: string
           enum:
-          - sentinelReconfigurationStatus
-          description: >-
-            NGSI-LD entity type. It has to be sentinelReconfigurationStatus.
+            - sentinelReconfigurationStatus
+          description: NGSI-LD entity type. It has to be sentinelReconfigurationStatus.
           x-ngsi:
             type: Property
 
         timestamp:
           type: string
           format: date-time
-          description: >-
-            Date and time at which the Sentinel reconfiguration status message
-            was generated.
+          description: Date and time at which the Sentinel reconfiguration status message was generated.
           x-ngsi:
             type: Property
 
@@ -57,87 +54,95 @@ components:
 
         relatedSentinel:
           anyOf:
-          - description: Property. Identifier format of any NGSI entity.
-            maxLength: 256
-            minLength: 1
-            pattern: '^[\w\-\.\{\}\$\+\*\[\]`|~^@!,:\\]+$'
-            type: string
+            - description: Property. Identifier format of any NGSI entity.
+              maxLength: 256
+              minLength: 1
+              pattern: ^[\w\-\.\{\}\$\+\*\[\]`|~^@!,:\\]+$
+              type: string
           format: uri
           type: string
-          description: Sentinel entity that reports the reconfiguration status.
+          description: Reference to the Sentinel entity reporting the reconfiguration status.
           x-ngsi:
             type: Relationship
 
         relatedOverwatch:
           anyOf:
-          - description: Property. Identifier format of any NGSI entity.
-            maxLength: 256
-            minLength: 1
-            pattern: '^[\w\-\.\{\}\$\+\*\[\]`|~^@!,:\\]+$'
-            type: string
+            - description: Property. Identifier format of any NGSI entity.
+              maxLength: 256
+              minLength: 1
+              pattern: ^[\w\-\.\{\}\$\+\*\[\]`|~^@!,:\\]+$
+              type: string
           format: uri
           type: string
-          description: Overwatch entity associated with the reporting Sentinel.
+          description: Reference to the Overwatch entity associated with the reporting Sentinel.
           x-ngsi:
             type: Relationship
 
         deployment:
           type: object
-          description: >-
-            Structured deployment information associated with the applied
-            reconfiguration.
+          description: Structured deployment information associated with the applied reconfiguration.
           properties:
             configurationId:
               type: array
-              description: >-
-                List of configuration identifiers applied during the
-                reconfiguration.
+              description: List of configuration identifiers applied during the reconfiguration.
               items:
                 type: string
-
             version:
               type: string
               description: Version of the applied deployment configuration.
-
+            priority:
+              type: string
+              enum:
+                - regular
+                - urgent
+              description: "Execution priority of the deployment. Values: regular, urgent."
+            bitstream:
+              type: object
+              description: Binary payload metadata associated with the deployment.
+              properties:
+                fileName:
+                  type: string
+                  description: Name of the bitstream binary file.
+                checksum:
+                  type: string
+                  description: Integrity checksum of the bitstream binary file.
+                sizeBytes:
+                  type: integer
+                  minimum: 0
+                  description: Size of the bitstream binary file in bytes.
           x-ngsi:
             type: Property
 
         status:
           type: object
-          description: >-
-            Structured execution status of the Sentinel reconfiguration.
+          description: Structured execution status of the Sentinel reconfiguration.
           properties:
             state:
               type: string
               enum:
-              - pending
-              - inProgress
-              - completed
-              - failed
+                - pending
+                - inProgress
+                - completed
+                - failed
               description: Current execution state of the reconfiguration.
-
             result:
               type: string
               enum:
-              - success
-              - fail
+                - success
+                - fail
               description: Execution result of the reconfiguration.
-
             details:
               type: string
-              description: >-
-                Additional human-readable details about the reconfiguration
-                result.
-
+              description: Additional human-readable details about the reconfiguration result.
           x-ngsi:
             type: Property
 
         previousState:
           type: string
           enum:
-          - healthy
-          - degraded
-          - offline
+            - healthy
+            - degraded
+            - offline
           description: Sentinel health state before the reconfiguration.
           x-ngsi:
             type: Property
@@ -145,32 +150,33 @@ components:
         currentState:
           type: string
           enum:
-          - healthy
-          - degraded
-          - offline
+            - healthy
+            - degraded
+            - offline
           description: Sentinel health state after the reconfiguration.
           x-ngsi:
             type: Property
 
         relatedSentinelReconfigurationCommand:
           anyOf:
-          - description: Property. Identifier format of any NGSI entity.
-            maxLength: 256
-            minLength: 1
-            pattern: ^[\w\-\.\{\}\$\+\*\[\]`|~^@!,:\\]+$
-            type: string
+            - description: Property. Identifier format of any NGSI entity.
+              maxLength: 256
+              minLength: 1
+              pattern: ^[\w\-\.\{\}\$\+\*\[\]`|~^@!,:\\]+$
+              type: string
           format: uri
           type: string
-          description: Reference to the triggering M10 SentinelReconfigurationCommand entity id.
+          description: Reference to the M10 Sentinel reconfiguration command that initiated this reconfiguration workflow.
           x-ngsi:
             type: Relationship
+
 info:
   title: MEDIATE M11 Sentinel Reconfiguration Status Message
-  version: "0.1.0"
+  version: "0.3.0"
   description: >-
-    Data model for MEDIATE Message M11, used by a Sentinel to report the status
-    of a reconfiguration execution through the Overwatch Broker to the Service
-    Manager and Orchestrator.
+    Data model for MEDIATE Message M11. Published by a Sentinel after
+    reconfiguration execution. The deployment object includes bitstream
+    metadata for FPGA/hardware-level reconfigurations (TUC proposal).
 
 openapi: "3.0.3"
 

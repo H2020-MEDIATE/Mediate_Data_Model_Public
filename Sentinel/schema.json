@@ -1,7 +1,7 @@
 {
   "$schema": "http://json-schema.org/schema#",
   "title": "Sentinel",
-  "description": "Schema for the MEDIATE Sentinel entity. A Sentinel represents a monitored or managed component registered in the Service Manager registry. It includes its sentinel type, operational status, health status and security status, heartbeat information, active alerts count, its related Overwatch, managed Assets, reconfiguration status, configuration version, and registration timestamp.",
+  "description": "Schema for the MEDIATE Sentinel entity. A Sentinel represents a monitored or managed component registered in the Service Manager registry. It includes its sentinel type, operational status, health status and security status, heartbeat information, active alerts count, its related Overwatch, managed Assets, last reconfiguration details, configuration version, and registration timestamp.",
   "type": "object",
   "id": {
     "$ref": "https://smart-data-models.github.io/data-models/common-schema.json#/definitions/EntityIdentifierType"
@@ -13,38 +13,22 @@
   "properties": {
     "type": {
       "type": "string",
-      "enum": [
-        "sentinel"
-      ],
+      "enum": ["sentinel"],
       "description": "NGSI-LD entity type. It has to be sentinel."
     },
     "sentinelType": {
       "type": "string",
-      "enum": [
-        "data-sentinel",
-        "software-sentinel",
-        "network-sentinel"
-      ],
+      "enum": ["data-sentinel", "software-sentinel", "network-sentinel"],
       "description": "Property. Category of the Sentinel. Standardized MVP enumeration shared with M1."
     },
     "operationalStatus": {
       "type": "string",
-      "enum": [
-        "OPERATIONAL",
-        "RECONFIGURING",
-        "INITIALIZING",
-        "STOPPED",
-        "FAILED"
-      ],
-      "description": "Property. Current operational status of the Sentinel."
+      "enum": ["OPERATIONAL", "RECONFIGURING", "INITIALIZING", "STOPPED", "FAILED"],
+      "description": "Property. Current operational status of the Sentinel. Acquired from M12 heartbeat messages."
     },
     "healthStatus": {
       "type": "string",
-      "enum": [
-        "HEALTHY",
-        "DEGRADED",
-        "OFFLINE"
-      ],
+      "enum": ["HEALTHY", "DEGRADED", "OFFLINE"],
       "description": "Property. Health status of the Sentinel, acquired from M12 heartbeat messages."
     },
     "securityStatus": {
@@ -67,9 +51,30 @@
         "$ref": "https://smart-data-models.github.io/data-models/common-schema.json#/definitions/EntityIdentifierType"
       }
     },
-    "lastReconfigurationStatus": {
-      "type": "string",
-      "description": "Property. Last known reconfiguration execution status of the Sentinel. Example: SUCCESS."
+    "lastReconfiguration": {
+      "type": "object",
+      "description": "Property. Structured summary of the last reconfiguration execution for this Sentinel, updated by the Service Manager upon receiving M11.",
+      "properties": {
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Date and time at which the last reconfiguration was executed."
+        },
+        "state": {
+          "type": "string",
+          "enum": ["notInitiated", "pending", "inProgress", "completed", "failed"],
+          "description": "Execution state of the last reconfiguration."
+        },
+        "result": {
+          "type": "string",
+          "enum": ["notInitiated", "success", "fail"],
+          "description": "Result of the last reconfiguration execution."
+        },
+        "details": {
+          "type": "string",
+          "description": "Additional human-readable details about the last reconfiguration result."
+        }
+      }
     },
     "configurationVersion": {
       "type": "string",
