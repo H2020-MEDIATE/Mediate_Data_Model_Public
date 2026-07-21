@@ -120,6 +120,7 @@ components:
             state:
               type: string
               enum:
+                - notInitiated
                 - pending
                 - inProgress
                 - completed
@@ -128,6 +129,7 @@ components:
             result:
               type: string
               enum:
+                - notInitiated
                 - success
                 - fail
               description: Execution result of the reconfiguration.

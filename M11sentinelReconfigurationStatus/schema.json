@@ -79,12 +79,12 @@
       "properties": {
         "state": {
           "type": "string",
-          "enum": ["pending", "inProgress", "completed", "failed"],
+          "enum": ["notInitiated", "pending", "inProgress", "completed", "failed"],
           "description": "Current execution state of the reconfiguration."
         },
         "result": {
           "type": "string",
-          "enum": ["success", "fail"],
+          "enum": ["notInitiated", "success", "fail"],
           "description": "Execution result of the reconfiguration."
         },
         "details": {
