@@ -32,6 +32,10 @@
       "format": "date-time",
       "description": "Property. Date and time at which the predefined Sentinel configuration message was generated."
     },
+    "relatedReconfigurationExecutionPlan": {
+      "$ref": "https://smart-data-models.github.io/data-models/common-schema.json#/definitions/EntityIdentifierType",
+      "description": "Relationship. Reference to the related M8 ReconfigurationExecutionPlan message that triggered the retrieval of this predefined Sentinel configuration."
+    },
     "request": {
       "type": "object",
       "description": "Property. Request context associated with the predefined Sentinel configuration response.",

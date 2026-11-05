@@ -87,6 +87,22 @@ components:
           x-ngsi:
             type: Property
 
+        relatedPredefinedSentinelConfiguration:
+          anyOf:
+            - description: Property. Identifier format of any NGSI entity.
+              maxLength: 256
+              minLength: 1
+              pattern: '^[\w\-\.\{\}\$\+\*\[\]`|~^@!,:\\]+$'
+              type: string
+          format: uri
+          type: string
+          description: >-
+            Reference to the related M9 PredefinedSentinelConfiguration message
+            containing the predefined Sentinel configuration from which this
+            reconfiguration command was derived.
+          x-ngsi:
+            type: Relationship
+
         deployment:
           type: object
           description: >-

@@ -42,6 +42,10 @@
       "format": "date-time",
       "description": "Property. Date and time at which the Sentinel reconfiguration command was generated."
     },
+    "relatedPredefinedSentinelConfiguration": {
+      "$ref": "https://smart-data-models.github.io/data-models/common-schema.json#/definitions/EntityIdentifierType",
+      "description": "Relationship. Reference to the related M9 PredefinedSentinelConfiguration message containing the predefined Sentinel configuration from which this reconfiguration command was derived."
+    },
     "deployment": {
       "type": "object",
       "description": "Property. Deployment information associated with the reconfiguration command.",

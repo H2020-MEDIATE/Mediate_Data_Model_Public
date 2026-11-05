@@ -68,6 +68,22 @@ components:
           x-ngsi:
             type: Property
 
+        relatedReconfigurationExecutionPlan:
+          anyOf:
+            - description: Property. Identifier format of any NGSI entity.
+              maxLength: 256
+              minLength: 1
+              pattern: '^[\w\-\.\{\}\$\+\*\[\]`|~^@!,:\\]+$'
+              type: string
+          format: uri
+          type: string
+          description: >-
+            Reference to the related M8 ReconfigurationExecutionPlan message
+            that triggered the retrieval of this predefined Sentinel
+            configuration.
+          x-ngsi:
+            type: Relationship
+
         request:
           type: object
           description: >-

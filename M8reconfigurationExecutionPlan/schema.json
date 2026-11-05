@@ -24,6 +24,10 @@
       "format": "date-time",
       "description": "Property. Date and time at which the reconfiguration execution plan was generated."
     },
+    "relatedPolicyCountermeasureDecision": {
+      "$ref": "https://smart-data-models.github.io/data-models/common-schema.json#/definitions/EntityIdentifierType",
+      "description": "Relationship. Reference to the related M7 PolicyCountermeasureDecision message containing the final countermeasure decision from which this reconfiguration execution plan was derived."
+    },
     "orderedItems": {
       "type": "array",
       "description": "Property. Ordered list of reconfiguration or deployment steps to be executed by the Sentinel Reconfiguration Deployment Unit.",
