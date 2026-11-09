@@ -46,6 +46,7 @@
         "eventId": "https://raw.githubusercontent.com/H2020-MEDIATE/Mediate_Data_Model_Public/main/M1DetectedEventMessage/schema.json#eventId",
         "eventToolType": "https://raw.githubusercontent.com/H2020-MEDIATE/Mediate_Data_Model_Public/main/M1DetectedEventMessage/schema.json#eventToolType",
         "eventType": "https://raw.githubusercontent.com/H2020-MEDIATE/Mediate_Data_Model_Public/main/M5policyEvaluatedCountermeasures/schema.json#eventType",
+        "executionStepId": "https://raw.githubusercontent.com/H2020-MEDIATE/Mediate_Data_Model_Public/main/M9predefinedSentinelConfiguration/schema.json#executionStepId",
         "explanation": "https://raw.githubusercontent.com/H2020-MEDIATE/Mediate_Data_Model_Public/main/M4dssMainOutputMessage/schema.json#explanation",
         "finalDecisionTaken": "https://raw.githubusercontent.com/H2020-MEDIATE/Mediate_Data_Model_Public/main/M5policyEvaluatedCountermeasures/schema.json#finalDecisionTaken",
         "firmware": "https://raw.githubusercontent.com/H2020-MEDIATE/Mediate_Data_Model_Public/main/M9predefinedSentinelConfiguration/schema.json#firmware",

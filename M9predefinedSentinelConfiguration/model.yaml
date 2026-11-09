@@ -84,6 +84,17 @@ components:
           x-ngsi:
             type: Relationship
 
+        executionStepId:
+          type: string
+          description: >-
+            Local identifier of the specific execution step within the M8
+            Reconfiguration Execution Plan referenced by
+            relatedReconfigurationExecutionPlan. Its value must match the
+            stepId of one entry in that M8 entity's orderedItems property.
+            This attribute is an NGSI-LD Property, not a Relationship.
+          x-ngsi:
+            type: Property
+
         request:
           type: object
           description: >-

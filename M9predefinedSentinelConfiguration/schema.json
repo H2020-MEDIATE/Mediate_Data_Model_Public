@@ -36,6 +36,10 @@
       "$ref": "https://smart-data-models.github.io/data-models/common-schema.json#/definitions/EntityIdentifierType",
       "description": "Relationship. Reference to the related M8 ReconfigurationExecutionPlan message that triggered the retrieval of this predefined Sentinel configuration."
     },
+    "executionStepId": {
+      "type": "string",
+      "description": "Property. Local identifier of the execution step within the M8 Reconfiguration Execution Plan referenced by relatedReconfigurationExecutionPlan. The value must match a stepId in the referenced M8 orderedItems."
+    },
     "request": {
       "type": "object",
       "description": "Property. Request context associated with the predefined Sentinel configuration response.",
