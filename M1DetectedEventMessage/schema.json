@@ -18,9 +18,9 @@
         {
           "type": "string",
           "enum": [
-            "geolocationError",
-            "idsDetectionError",
-            "firmwareUpdateError"
+            "geolocation-error",
+            "ids-detection-error",
+            "firmware-update-error"
           ]
         },
         {
@@ -30,9 +30,9 @@
           "items": {
             "type": "string",
             "enum": [
-              "geolocationError",
-              "idsDetectionError",
-              "firmwareUpdateError"
+              "geolocation-error",
+              "ids-detection-error",
+              "firmware-update-error"
             ]
           }
         }

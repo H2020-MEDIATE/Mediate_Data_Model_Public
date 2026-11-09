@@ -27,7 +27,11 @@ components:
             type: string
           format: uri
           type: string
-          description: Unique identifier of this M1 detected-event message.
+          description: >-
+            Unique identifier of this M1 detected-event message. Follows the
+            MEDIATE convention urn:ngsi-ld:mediate:entities:<entity_type>:<random_id>,
+            where <entity_type> is the entity type of the message
+            (geolocation-error, ids-detection-error or firmware-update-error).
           x-ngsi:
             type: Property
 
@@ -41,18 +45,18 @@ components:
           oneOf:
           - type: string
             enum:
-            - geolocationError
-            - idsDetectionError
-            - firmwareUpdateError
+            - geolocation-error
+            - ids-detection-error
+            - firmware-update-error
           - type: array
             minItems: 1
             uniqueItems: true
             items:
               type: string
               enum:
-              - geolocationError
-              - idsDetectionError
-              - firmwareUpdateError
+              - geolocation-error
+              - ids-detection-error
+              - firmware-update-error
           x-ngsi:
             type: Property
 
